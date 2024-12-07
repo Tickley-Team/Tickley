@@ -2,9 +2,8 @@
 name: Deploy static content to Pages
 
 on:
-  # 풀리퀘스트가 main 브랜치에 병합될 때 실행
-  pull_request:
-    types: [closed]
+  # main 브랜치에 직접 푸시되거나 PR이 병합될 때 실행
+  push:
     branches: ["main"]
   
   # Actions 탭에서 수동으로도 실행 가능하도록 유지
