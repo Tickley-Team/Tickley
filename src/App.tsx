@@ -6,6 +6,8 @@ import SurveySpareTime from './pages/SurveySpareTime'
 import Home from './pages/Home'
 import OnboardingPage from './pages/OnboardingPage'
 import TodosMemory from './pages/TodosMemory'
+import ProgressTimer from './pages/ProgressTimer'
+import CompletedTimer from './pages/CompletedTimer'
 
 function App() {
   const basename = process.env.NODE_ENV === 'production' ? '/Tickley' : '/'
@@ -20,6 +22,8 @@ function App() {
           <Route path="/todos/memory" element={<TodosMemory />} />
           <Route path="/survey" element={<SurveySpareTime />} />
           <Route path='/onboarding/:onboardingId' element={<OnboardingPage />} />
+          <Route path="/timer/progress" element={<ProgressTimer />} />
+          <Route path="/timer/completed" element={<CompletedTimer />} />
         </Routes>
       </BrowserRouter>
     </div>
