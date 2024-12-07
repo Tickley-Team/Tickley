@@ -9,8 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "prettier:check": "npx prettier --check",
-    "prettier:fix": "npx prettier --write",
-    "prepare": "husky install"
+    "prettier:fix": "npx prettier --write"
   },
   "dependencies": {
     "react": "^18.3.1",
