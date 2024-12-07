@@ -4,6 +4,7 @@ import Home from './pages/Home.tsx'
 import OnBoarding from './pages/OnBoarding.tsx'
 import Todos from './pages/Todos.tsx'
 import TodosFind from './pages/TodosFind.tsx'
+import SurveySpareTime from './pages/SurveySpareTime'
 
 function App() {
   return (
@@ -14,6 +15,7 @@ function App() {
           <Route path="/onboarding" element={<OnBoarding />} />
           <Route path="/todos" element={<Todos />} />
           <Route path="/todos/find" element={<TodosFind />} />
+          <Route path="/survey" element={<SurveySpareTime />} />
         </Routes>
       </BrowserRouter>
     </div>
