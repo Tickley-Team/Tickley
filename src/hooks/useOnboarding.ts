@@ -11,7 +11,7 @@ const useOnboarding = () => {
   }
 
   const clickSkip = () => {
-      alert("추천 질문 페이지로 이동")
+      navigate('/survey')
   }
 
   return { onboardingId, clickNext, clickSkip };
