@@ -5,5 +5,5 @@ const REPO = 'Tickley';
 
 export default defineConfig({
   plugins: [react()],
-  base: `/${REPO}/`,
+  base: process.env.NODE_ENV === 'production' ? `/${REPO}/` : '/',
 })
