@@ -5,7 +5,7 @@ import { useSpareTimeStore } from '../stores/spareTimeStore'
 const SurveySpareTime = () => {
   const navigate = useNavigate()
   const handleClickButton = useCallback(() => {
-    navigate('/todos-find')
+    navigate('/todos/find')
   }, [])
   return (
     <>
