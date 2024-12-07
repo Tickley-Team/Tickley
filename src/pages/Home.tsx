@@ -13,8 +13,8 @@ const mockData: MockData = {
 
 const Home = () => {
   const navigate = useNavigate()
-  const [isFirstVisit, setIsFirstVisit] = useState(mockData.isFirstVisit)
-  const [hasTodoData, setHasTodoData] = useState(mockData.hasTodoData)
+  const [isFirstVisit, ] = useState(mockData.isFirstVisit)
+  const [hasTodoData, ] = useState(mockData.hasTodoData)
 
   // 처음 접속하지 않았을 때
   useEffect(() => {
