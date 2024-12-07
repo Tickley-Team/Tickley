@@ -2,8 +2,9 @@
 name: Deploy static content to Pages
 
 on:
-  # main 브랜치에 직접 푸시되거나 PR이 병합될 때 실행
-  push:
+  # 풀리퀘스트가 main 브랜치에 병합될 때 실행
+  pull_request:
+    types: [closed]
     branches: ["main"]
   
   # Actions 탭에서 수동으로도 실행 가능하도록 유지
@@ -17,14 +18,12 @@ permissions:
 
 # 동시에 하나의 배포만 허용하도록 구성
 concurrency:
-  group: "pages"
+  group: 'pages'
   cancel-in-progress: true
 
 jobs:
   # 단순히 배포만 수행하기에 하나의 잡으로만 구성
   deploy:
-    # PR이 병합되었을 때만 실행
-    if: github.event.pull_request.merged == true
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -36,7 +35,7 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 20
-          cache: "npm"
+          cache: 'npm'
       - name: Install dependencies
         run: npm ci
       - name: Build
@@ -47,7 +46,7 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           # dist 디렉터리 업로드
-          path: "./dist"
+          path: './dist'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
