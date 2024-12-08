@@ -22,9 +22,7 @@ const ProgressTimer = () => {
         <button onClick={handleClickTimeStop}>{isRunning ? '일시정지' : '다시시작'}</button>
         <button onClick={() => handleClickSwitchQuit(true)}>그만두기</button>
       </div>
-      {isShowQuitPopup && (
-        <ProgressTimerQuitPopup onClickClose={() => handleClickSwitchQuit(false)} />
-      )}
+      <ProgressTimerQuitPopup open={isShowQuitPopup} onClickClose={() => handleClickSwitchQuit(false)} />
     </MobileLayout>
   )
 }
