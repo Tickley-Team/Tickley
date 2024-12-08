@@ -17,6 +17,9 @@ export const MobileLayout = ({
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'center',
+        '@media (min-width: 1200px)': {
+          maxWidth: '375px', // 1200px 이상에서도 375px 고정
+        },
       }}
       {...restProps}
     >
