@@ -10,6 +10,8 @@ import ProgressTimer from './pages/ProgressTimer'
 import CompletedTimer from './pages/CompletedTimer'
 import { fetchRecommendTodos } from './api/fetchRecommendTodos'
 import { createBrowserRouter, RouterProvider } from 'react-router'
+import { ThemeProvider } from '@mui/material/styles'
+import { TickleyTheme } from './theme'
 
 function App() {
   const isProduction = process.env.NODE_ENV === 'production'
@@ -60,9 +62,9 @@ function App() {
   )
 
   return (
-    <div className="App">
+    <ThemeProvider theme={TickleyTheme}>
       <RouterProvider router={router} />
-    </div>
+    </ThemeProvider>
   )
 }
 

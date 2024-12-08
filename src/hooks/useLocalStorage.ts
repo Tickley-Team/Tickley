@@ -1,6 +1,6 @@
 import { useState } from 'react'
 
-export const useLocalStorage = <T>(key: string, initialValue: T) => {
+export const useLocalStorage = <T>(initialValue: T, key: string = 'todos') => {
   const [value, setValue] = useState<T>(() => {
     const storedValue = localStorage.getItem(key)
     // 로컬스토리지 값이 없으면 초기값 사용, 값이 있으면 JSON으로 파싱

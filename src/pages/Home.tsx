@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import { MobileLayout } from '../layout/MobileLayout'
+import { CTAButton } from '../components/Button'
 
 interface MockData {
   isFirstVisit: boolean
@@ -39,9 +40,10 @@ const Home = () => {
       <div>틈새시간 할일 알려줌</div>
       <div>티끌,먼지 이미지</div>
       {/* 시작하기 버튼 누르면 온보딩 화면으로 이동 */}
-      <Link to="/onboarding/0">
-        <button>시작하기</button>
-      </Link>
+
+      <CTAButton>
+        <Link to="/onboarding/0">시작하기</Link>
+      </CTAButton>
     </MobileLayout>
   )
 }
