@@ -1,4 +1,3 @@
-import AddTodoMainButton from '../components/AddTodoMainButton'
 import BottomNavbar from '../components/BottomNavbar'
 import {
   Backdrop,
@@ -192,7 +191,7 @@ export default Todos
 
 const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
   const navigate = useNavigate()
-  const { timeLeft, setTimeLeft } = useTimeLeftStore()
+  const { setTimeLeft } = useTimeLeftStore()
 
   const handleTodoItemStatus = () => {
     if (itemStatus === 'ready') {
