@@ -5,23 +5,19 @@ import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
 type RangeSliderProps = Partial<SliderProps>
 
 const RangeMapper = [
-  { value: 5, label: '5분 이하', displayText: '5분 이하' },
-  { value: 25, label: '', displayText: '5분~15분' },
-  { value: 50, label: '', displayText: '15분~25분' },
-  { value: 75, label: '', displayText: '25분~35분' },
-  { value: 100, label: '40분 이상', displayText: '40분 이상' },
+  { value: 5, label: '5분 이하', displayText: '5분 이하', time: 5 },
+  { value: 25, label: '', displayText: '5분~15분', time: 15 },
+  { value: 50, label: '', displayText: '15분~25분', time: 25 },
+  { value: 75, label: '', displayText: '25분~35분', time: 35 },
+  { value: 100, label: '40분 이상', displayText: '40분 이상', time: 40 },
 ]
 
 export const RangeSlider = ({ ...restProps }: RangeSliderProps) => {
   const { spareTime, setSpareTime } = useRecommendTodoFilterStore()
 
-  const handleChange = (
-    _event: Event,
-    value: number | number[],
-    activeThumb: number,
-  ) => {
-    setSpareTime(value as number)
-    console.log('value ', value, activeThumb)
+  const handleChange = (_event: Event, value: number | number[]) => {
+    const time = RangeMapper.find((step) => step.value === value)?.time
+    setSpareTime(time ?? 5)
   }
 
   const marks = RangeMapper.map(({ value, label }) => ({
@@ -32,10 +28,10 @@ export const RangeSlider = ({ ...restProps }: RangeSliderProps) => {
     <Box width={'100%'}>
       <Typography sx={{ mb: 1, color: '#666666' }}>
         {/* TODO: refactor 연산 */}
-        {RangeMapper.find(({ value }) => value === spareTime)?.displayText}
+        {RangeMapper.find(({ time }) => time === spareTime)?.displayText}
       </Typography>
       <CustomSlider
-        defaultValue={25}
+        value={RangeMapper.find(({ time }) => time === spareTime)?.value}
         marks={marks}
         step={null}
         onChange={handleChange}
