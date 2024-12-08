@@ -1,18 +1,49 @@
 import { useState } from 'react'
 import AddTodoMainButton from "../components/AddTodoMainButton"
 import BottomNavbar from '../components/BottomNavbar'
+import {
+  Backdrop,
+  Box,
+  Popper,
+  SwipeableDrawer,
+  TextField,
+} from '@mui/material'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
+import addIcon from '../assets/icons/addIcon.svg'
+import { RangeSlider } from '../components/RangeSlider'
+import { useLocalStorage } from '../hooks/useLocalStorage'
+import { MobileLayout } from '../layout/MobileLayout'
+import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
+import { useTimeLeftStore } from '../stores/timeLeftStore'
+import { TodoItem } from '../types'
+import { DateNowToUnix } from '../utils'
+import { BasicDialog } from '../components/BasicDialog'
 
 const Todos = () => {
-  const [addLayerStatus, setAddLayerStatus] = useState(false)
-  const [bottomSheetStatus, setBottomSheetStatus] = useState(false)
+  const [isAddLayerOpen, setIsAddLayerOpen] = useState(false)
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false)
   const [title, setTitle] = useState('')
+  const { spareTime } = useRecommendTodoFilterStore()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const { addToStoredValue, value: todoList } = useLocalStorage<TodoItem[]>(
+    [],
+    'todos',
+  )
+  console.log('todos', todoList)
 
-  const handleAddLayerOpen = () => {
-    setAddLayerStatus(true)
-  }
+  const filteredTodoList = todoList.filter(
+    (todo) =>
+      new Date(todo.registeredDate).toDateString() ==
+      new Date(DateNowToUnix()).toDateString(),
+  )
 
-  const handleAddLayerClose = () => {
-    setAddLayerStatus(false)
+  const handleAddLayerOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
+    console.log('anchor', event.currentTarget)
+
+    setAnchorEl(anchorEl ? null : event.currentTarget)
+    setIsAddLayerOpen(true)
   }
 
   const handleAddUrl = () => {
@@ -20,77 +51,173 @@ const Todos = () => {
   }
 
   const handleAddTodoLayer = () => {
-    setAddLayerStatus(false)
-    setBottomSheetStatus(true)
+    setIsAddLayerOpen(false)
+    setIsBottomSheetOpen(true)
   }
 
   const handleCancel = () => {
-    setBottomSheetStatus(false)
     setTitle('')
+    setIsBottomSheetOpen(false)
   }
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
   }
 
-  const handleSubmit = () => {}
-
+  const handleSubmit = () => {
+    // title,
+    const todoItem: TodoItem = {
+      title,
+      estimateTime: spareTime,
+      itemStatus: 'ready',
+      registeredDate: DateNowToUnix(),
+    }
+    addToStoredValue(todoItem)
+    setTitle('')
+    setIsBottomSheetOpen(false)
+  }
+  const handleCalendarClicked = () => {
+    setIsDialogOpen(true)
+  }
   return (
-    <div>
+    <MobileLayout>
       <p>할일 목록 페이지입니다.</p>
-
-      
+      <Box onClick={handleCalendarClicked}>2024년 9월</Box>
       {/* 할 일 추가 버튼 */}
-      <AddTodoMainButton />
-
+      {/* <AddTodoMainButton /> */}
+      <ul>
+        {filteredTodoList.map((todo) => (
+          <Todo
+            key={todo.registeredDate.toString()}
+            title={todo.title}
+            estimateTime={todo.estimateTime}
+            itemStatus={'ready'}
+            registeredDate={todo.registeredDate}
+          />
+        ))}
+      </ul>
       {/* + 버튼을 눌렀을 때 할일 추가/볼것 추가 모달이 뜸(할일 목록 부분 dim 처리됨(이 부분은 css에서)) */}
       {/* 그리고 할일 추가를 클릭하면 할일 추가/볼것 추가 모달이 사라지고 할일 등록하는 바텀 시트 모달이 뜸 */}
       {/* 볼것 추가를 클릭하면 얼럿으로 처리 */}
       {/* X를 누르게 되면 할일 추가/볼것 추가 모달이 사라짐 */}
-      {!bottomSheetStatus && (
-        <button
-          onClick={addLayerStatus ? handleAddLayerClose : handleAddLayerOpen}
-        >
-          {addLayerStatus ? 'X' : '+'}
-        </button>
-      )}
+      <div>
+        {!isBottomSheetOpen && (
+          <button type="button" onClick={handleAddLayerOpen}>
+            {isAddLayerOpen ? 'X' : '+'}
+          </button>
+        )}
+      </div>
       {/* 할일 추가/볼것 추가 모달 START */}
-      {addLayerStatus && (
-        <div
-          style={{ backgroundColor: 'skyblue' }}
-          onClick={handleAddLayerClose}
-        >
-          <div className="add-layer">
-            <button onClick={handleAddTodoLayer}>할일 추가</button>
-            <button onClick={handleAddUrl}>볼 것(URL 추가)</button>
-          </div>
-        </div>
-      )}
+      <Backdrop
+        open={isAddLayerOpen}
+        onClick={() => {
+          setIsAddLayerOpen(false)
+          setAnchorEl(null)
+        }}
+      >
+        <Popper open={isAddLayerOpen} anchorEl={anchorEl}>
+          <Box sx={{ bgcolor: 'background.paper' }}>
+            <Box className="add-layer">
+              <Box
+                display={'flex'}
+                gap={'12px'}
+                marginBottom={'16px'}
+                alignItems={'center'}
+                onClick={handleAddTodoLayer}
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={addIcon} alt={'addIcon'} />
+                <p>할일 추가</p>
+              </Box>
+              <Box
+                display={'flex'}
+                gap={'12px'}
+                alignItems={'center'}
+                style={{ cursor: 'pointer' }}
+                onClick={handleAddUrl}
+              >
+                <img src={addIcon} alt={'addIcon'} />
+                <p>볼 것(URL 추가)</p>
+              </Box>
+            </Box>
+          </Box>
+        </Popper>
+      </Backdrop>
       {/* 할일 추가/볼것 추가 모달 END */}
 
       {/* 할일 등록하는 바텀 시트 모달 START */}
-      {bottomSheetStatus && (
-        <div>
-          <input
-            type="text"
-            placeholder="새 할일 입력"
+      {isBottomSheetOpen && (
+        <SwipeableDrawer
+          anchor={'bottom'}
+          open={isBottomSheetOpen}
+          onOpen={() => {}}
+          onClose={() => {}}
+        >
+          <TextField
+            label="새 할일 입력"
+            variant="outlined"
             value={title}
             onChange={handleChangeTitle}
           />
-          {/* <RangeSlider /> */}
-          <div>
-            <button onClick={handleCancel}>취소</button>
-            <button disabled={!title} onClick={handleSubmit}>
-              추가
-            </button>
-          </div>
-        </div>
+          <RangeSlider />
+          <button onClick={handleCancel}>취소</button>
+          <button disabled={!title} onClick={handleSubmit}>
+            추가
+          </button>
+        </SwipeableDrawer>
       )}
       {/* 할일 등록하는 바텀 시트 모달 END */}
 
       <BottomNavbar />
     </div>
+      <BasicDialog
+        isDialogOpen={isDialogOpen}
+        handleClose={() => setIsDialogOpen(false)}
+      />
+      <div>
+        <Link to="/todos">
+          <button>오늘 할일</button>
+        </Link>
+        <Link to="/todos/find">
+          <button>할일 찾기</button>
+        </Link>
+        <Link to="/todos/memory">
+          <button>기록</button>
+        </Link>
+      </div>
+    </MobileLayout>
   )
 }
 
 export default Todos
+
+const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
+  const navigate = useNavigate()
+  const { timeLeft, setTimeLeft } = useTimeLeftStore()
+
+  const handleTodoItemStatus = () => {
+    if (itemStatus === 'ready') {
+      setTimeLeft(estimateTime)
+      navigate('/timer/progress')
+    }
+  }
+
+  return (
+    <div>
+      <Box style={{ flex: 'column' }}>
+        <Box>
+          <div>{<img src="#" alt="" />}</div>
+          <div>{title}</div>
+          <div>{`${estimateTime}분`}</div>
+        </Box>
+        <Box>
+          {itemStatus === 'ready' ? (
+            <button onClick={handleTodoItemStatus}>{itemStatus}</button>
+          ) : (
+            <p>완료 아이콘 넣기</p>
+          )}
+        </Box>
+      </Box>
+    </div>
+  )
+}
