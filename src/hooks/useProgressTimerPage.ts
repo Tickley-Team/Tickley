@@ -30,13 +30,20 @@ const useProgressTimerPage = () => {
     setIsRunning(!isRunning)
   }
 
+  const handleClickSwitchQuit = (isStop: boolean) => {
+    if (isStop) { setIsRunning(false) }
+    if (!isStop) { setIsRunning(true) }
+
+    setShowQuitPopup(isStop)
+  }
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
     const remainingSeconds = seconds % 60
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}:00`
   }
 
-    return { isShowQuitPopup, isRunning, timeLeft, setShowQuitPopup, handleClickTimeStop, formatTime };
+    return { isShowQuitPopup, isRunning, timeLeft, handleClickSwitchQuit, handleClickTimeStop, formatTime };
 }
 
 export default useProgressTimerPage;

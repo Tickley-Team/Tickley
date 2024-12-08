@@ -5,7 +5,7 @@ import useProgressTimerPage from '../hooks/useProgressTimerPage'
 const ProgressTimer = () => {
   const { 
     isShowQuitPopup, isRunning, timeLeft, 
-    setShowQuitPopup, handleClickTimeStop, formatTime, 
+    handleClickSwitchQuit, handleClickTimeStop, formatTime, 
   } = useProgressTimerPage();
   
   return (
@@ -19,10 +19,10 @@ const ProgressTimer = () => {
         <div>{formatTime(timeLeft)}</div>
         <div>프로그레스바</div>
         <button onClick={handleClickTimeStop}>{isRunning ? '일시정지' : '다시시작'}</button>
-        <button onClick={() => setShowQuitPopup(true)}>그만두기</button>
+        <button onClick={() => handleClickSwitchQuit(true)}>그만두기</button>
       </div>
       {isShowQuitPopup && (
-        <ProgressTimerQuitPopup onClickClose={() => setShowQuitPopup(false)} />
+        <ProgressTimerQuitPopup onClickClose={() => handleClickSwitchQuit(false)} />
       )}
     </MobileLayout>
   )
