@@ -11,7 +11,7 @@ import CompletedTimer from './pages/CompletedTimer'
 
 function App() {
   const basename = process.env.NODE_ENV === 'production' ? '/Tickley' : '/'
-  
+
   return (
     <div className="App">
       <BrowserRouter basename={basename}>
@@ -21,7 +21,10 @@ function App() {
           <Route path="/todos/find" element={<TodosFind />} />
           <Route path="/todos/memory" element={<TodosMemory />} />
           <Route path="/survey" element={<SurveySpareTime />} />
-          <Route path='/onboarding/:onboardingId' element={<OnboardingPage />} />
+          <Route
+            path="/onboarding/:onboardingId"
+            element={<OnboardingPage />}
+          />
           <Route path="/timer/progress" element={<ProgressTimer />} />
           <Route path="/timer/completed" element={<CompletedTimer />} />
         </Routes>
