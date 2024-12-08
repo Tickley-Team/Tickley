@@ -1,5 +1,6 @@
+import { Link } from "react-router";
+import AddTodoMainButton from "../components/AddTodoMainButton";
 import { useState } from 'react'
-import { Link } from 'react-router'
 
 const Todos = () => {
   const [addLayerStatus, setAddLayerStatus] = useState(false)
@@ -37,6 +38,11 @@ const Todos = () => {
   return (
     <div>
       <p>할일 목록 페이지입니다.</p>
+
+      
+      {/* 할 일 추가 버튼 */}
+      <AddTodoMainButton />
+
       {/* + 버튼을 눌렀을 때 할일 추가/볼것 추가 모달이 뜸(할일 목록 부분 dim 처리됨(이 부분은 css에서)) */}
       {/* 그리고 할일 추가를 클릭하면 할일 추가/볼것 추가 모달이 사라지고 할일 등록하는 바텀 시트 모달이 뜸 */}
       {/* 볼것 추가를 클릭하면 얼럿으로 처리 */}
@@ -81,6 +87,7 @@ const Todos = () => {
         </div>
       )}
       {/* 할일 등록하는 바텀 시트 모달 END */}
+
       <div>
         <Link to="/todos">
           <button>오늘 할일</button>
