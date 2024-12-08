@@ -16,7 +16,7 @@ export const RangeSlider = ({ ...restProps }: RangeSliderProps) => {
   const { spareTime, setSpareTime } = useRecommendTodoFilterStore()
 
   const handleChange = (
-    event: Event,
+    _event: Event,
     value: number | number[],
     activeThumb: number,
   ) => {
