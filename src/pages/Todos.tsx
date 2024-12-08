@@ -1,5 +1,4 @@
-import { useState } from 'react'
-import AddTodoMainButton from "../components/AddTodoMainButton"
+import AddTodoMainButton from '../components/AddTodoMainButton'
 import BottomNavbar from '../components/BottomNavbar'
 import {
   Backdrop,
@@ -169,7 +168,7 @@ const Todos = () => {
       {/* 할일 등록하는 바텀 시트 모달 END */}
 
       <BottomNavbar />
-    </div>
+
       <BasicDialog
         isDialogOpen={isDialogOpen}
         handleClose={() => setIsDialogOpen(false)}
