@@ -4,9 +4,10 @@ import { useNavigate } from 'react-router'
 const useProgressTimerPage = () => {
   const navigate = useNavigate()
 
+  const totalTime = 15 * 60;
   const [isShowQuitPopup, setShowQuitPopup] = useState(false)
   const [isRunning, setIsRunning] = useState(true)
-  const [timeLeft, setTimeLeft] = useState(15 * 60)
+  const [timeLeft, setTimeLeft] = useState(totalTime)
 
   useEffect(() => {
     let timer: NodeJS.Timeout
@@ -43,7 +44,7 @@ const useProgressTimerPage = () => {
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}:00`
   }
 
-    return { isShowQuitPopup, isRunning, timeLeft, handleClickSwitchQuit, handleClickTimeStop, formatTime };
+    return { isShowQuitPopup, isRunning, totalTime, timeLeft, handleClickSwitchQuit, handleClickTimeStop, formatTime };
 }
 
 export default useProgressTimerPage;
