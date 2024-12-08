@@ -14,6 +14,7 @@ import {
   Popper,
   Backdrop,
 } from '@mui/material'
+import { MobileLayout } from '../layout/MobileLayout'
 
 const Todos = () => {
   const [isAddLayerOpen, setIsAddLayerOpen] = useState(false)
@@ -34,7 +35,7 @@ const Todos = () => {
       new Date(DateNowToUnix()).toDateString(),
   )
 
-  const handleAddLayerOpen = (event: React.MouseEvent<HTMLElement>) => {
+  const handleAddLayerOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
     console.log('anchor', event.currentTarget)
 
     setAnchorEl(anchorEl ? null : event.currentTarget)
@@ -77,30 +78,29 @@ const Todos = () => {
   }
 
   return (
-    <div>
+    <MobileLayout>
       <p>할일 목록 페이지입니다.</p>
 
       {/* 할 일 추가 버튼 */}
-      <AddTodoMainButton />
-
-      {filteredTodoList.map((todo) => (
-        <Todo
-          key={todo.registeredDate.toString()}
-          title={todo.title}
-          estimateTime={todo.estimateTime}
-          itemStatus={'ready'}
-          registeredDate={todo.registeredDate}
-        />
-      ))}
+      {/* <AddTodoMainButton /> */}
+      <ul>
+        {filteredTodoList.map((todo) => (
+          <Todo
+            key={todo.registeredDate.toString()}
+            title={todo.title}
+            estimateTime={todo.estimateTime}
+            itemStatus={'ready'}
+            registeredDate={todo.registeredDate}
+          />
+        ))}
+      </ul>
       {/* + 버튼을 눌렀을 때 할일 추가/볼것 추가 모달이 뜸(할일 목록 부분 dim 처리됨(이 부분은 css에서)) */}
       {/* 그리고 할일 추가를 클릭하면 할일 추가/볼것 추가 모달이 사라지고 할일 등록하는 바텀 시트 모달이 뜸 */}
       {/* 볼것 추가를 클릭하면 얼럿으로 처리 */}
       {/* X를 누르게 되면 할일 추가/볼것 추가 모달이 사라짐 */}
       <div>
         {!isBottomSheetOpen && (
-          <button
-            onClick={isAddLayerOpen ? handleAddLayerClose : handleAddLayerOpen}
-          >
+          <button type="button" onClick={handleAddLayerOpen}>
             {isAddLayerOpen ? 'X' : '+'}
           </button>
         )}
@@ -110,37 +110,35 @@ const Todos = () => {
       <Backdrop
         sx={(theme) => ({ color: '#fff' })}
         open={isAddLayerOpen}
-        onClick={() => setIsAddLayerOpen(false)}
+        onClick={() => {
+          setIsAddLayerOpen(false)
+          setAnchorEl(null)
+        }}
       >
-        <Popper
-          // Note: The following zIndex style is specifically for documentation purposes and may not be necessary in your application.
-          sx={{ zIndex: 12000, backgroundColor: '#fff', padding: '24px' }}
-          open={isAddLayerOpen}
-          anchorEl={anchorEl}
-          placement={'top-end'}
-          transition
-        >
-          <Box className="add-layer">
-            <Box
-              display={'flex'}
-              gap={'12px'}
-              marginBottom={'16px'}
-              alignItems={'center'}
-              onClick={handleAddTodoLayer}
-              style={{ cursor: 'pointer' }}
-            >
-              <img src={addIcon} alt={'addIcon'} />
-              <p>할일 추가</p>
-            </Box>
-            <Box
-              display={'flex'}
-              gap={'12px'}
-              alignItems={'center'}
-              style={{ cursor: 'pointer' }}
-              onClick={handleAddUrl}
-            >
-              <img src={addIcon} alt={'addIcon'} />
-              <p>볼 것(URL 추가)</p>
+        <Popper open={isAddLayerOpen} anchorEl={anchorEl}>
+          <Box sx={{ bgcolor: 'background.paper' }}>
+            <Box className="add-layer">
+              <Box
+                display={'flex'}
+                gap={'12px'}
+                marginBottom={'16px'}
+                alignItems={'center'}
+                onClick={handleAddTodoLayer}
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={addIcon} alt={'addIcon'} />
+                <p>할일 추가</p>
+              </Box>
+              <Box
+                display={'flex'}
+                gap={'12px'}
+                alignItems={'center'}
+                style={{ cursor: 'pointer' }}
+                onClick={handleAddUrl}
+              >
+                <img src={addIcon} alt={'addIcon'} />
+                <p>볼 것(URL 추가)</p>
+              </Box>
             </Box>
           </Box>
         </Popper>
@@ -182,7 +180,7 @@ const Todos = () => {
           <button>기록</button>
         </Link>
       </div>
-    </div>
+    </MobileLayout>
   )
 }
 
