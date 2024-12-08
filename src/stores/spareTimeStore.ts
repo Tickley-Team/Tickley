@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-interface SpareTimeState {
+export interface SpareTimeState {
   spareTime: number
   setSpareTime: (value: number) => void
 }
