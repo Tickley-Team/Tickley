@@ -1,10 +1,11 @@
 import ProgressTimerQuitPopup from '../components/ProgressTimerQuitPopup'
 import { MobileLayout } from '../layout/MobileLayout'
 import useProgressTimerPage from '../hooks/useProgressTimerPage'
+import { LinearProgress } from '@mui/material';
 
 const ProgressTimer = () => {
   const { 
-    isShowQuitPopup, isRunning, timeLeft, 
+    isShowQuitPopup, isRunning, totalTime,timeLeft, 
     handleClickSwitchQuit, handleClickTimeStop, formatTime, 
   } = useProgressTimerPage();
   
@@ -17,7 +18,7 @@ const ProgressTimer = () => {
           몸과 마음을 리프레시 해보아요
         </p>
         <div>{formatTime(timeLeft)}</div>
-        <div>프로그레스바</div>
+        <LinearProgress variant="determinate" value={((totalTime - timeLeft) / totalTime) * 100} />
         <button onClick={handleClickTimeStop}>{isRunning ? '일시정지' : '다시시작'}</button>
         <button onClick={() => handleClickSwitchQuit(true)}>그만두기</button>
       </div>
