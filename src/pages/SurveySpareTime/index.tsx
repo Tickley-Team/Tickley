@@ -1,6 +1,7 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
 import { useRecommendTodoFilterStore } from '../../stores/recommendTodoFilterStore'
+import { MobileLayout } from '../../layout/MobileLayout'
 
 const SurveySpareTime = () => {
   const navigate = useNavigate()
@@ -8,11 +9,11 @@ const SurveySpareTime = () => {
     navigate('/todos/find')
   }, [])
   return (
-    <>
+    <MobileLayout>
       <h2>틈새 시간이 얼마나 있나요?</h2>
       <RangeSlider />
       <button onClick={handleClickButton}>할일 찾기 </button>
-    </>
+    </MobileLayout>
   )
 }
 
