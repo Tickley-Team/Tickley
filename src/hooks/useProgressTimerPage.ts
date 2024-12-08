@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react'
+import { useNavigate } from 'react-router'
 
 const useProgressTimerPage = () => {
+  const navigate = useNavigate()
+
   const [isShowQuitPopup, setShowQuitPopup] = useState(false)
-  const [timeLeft, setTimeLeft] = useState(15 * 60)
   const [isRunning, setIsRunning] = useState(true)
+  const [timeLeft, setTimeLeft] = useState(15 * 60)
 
   useEffect(() => {
     let timer: NodeJS.Timeout
@@ -12,6 +15,10 @@ const useProgressTimerPage = () => {
       timer = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1)
       }, 1000)
+    }
+    
+    if (timeLeft <= 0) {
+      navigate('/timer/completed');
     }
 
     return () => {
@@ -23,13 +30,20 @@ const useProgressTimerPage = () => {
     setIsRunning(!isRunning)
   }
 
+  const handleClickSwitchQuit = (isStop: boolean) => {
+    if (isStop) { setIsRunning(false) }
+    if (!isStop) { setIsRunning(true) }
+
+    setShowQuitPopup(isStop)
+  }
+
   const formatTime = (seconds: number) => {
     const minutes = Math.floor(seconds / 60)
     const remainingSeconds = seconds % 60
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}:00`
   }
 
-    return { isShowQuitPopup, timeLeft, setShowQuitPopup, handleClickTimeStop, formatTime };
+    return { isShowQuitPopup, isRunning, timeLeft, handleClickSwitchQuit, handleClickTimeStop, formatTime };
 }
 
 export default useProgressTimerPage;
