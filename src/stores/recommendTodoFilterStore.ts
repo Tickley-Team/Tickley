@@ -9,7 +9,7 @@ interface RecommendTodoFilterStore {
 export const useRecommendTodoFilterStore = create<RecommendTodoFilterStore>()(
   (set) => ({
     categoryName: '휴식',
-    spareTime: 15,
+    spareTime: 25,
     setSpareTime: (spareTime) => set({ spareTime }),
     setCategoryName: (categoryName) => set({ categoryName }),
   }),

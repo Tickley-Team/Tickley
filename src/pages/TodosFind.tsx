@@ -10,6 +10,7 @@ import {
   TodoRecommendItemType,
 } from '../types'
 import { MobileLayout } from '../layout/MobileLayout'
+import { RangeSlider } from '../components/RangeSlider'
 
 const TodosFind = () => {
   const todosMockData = useLoaderData<RecommendTodo[]>()?.map((todo) => ({
@@ -31,10 +32,10 @@ const TodosFind = () => {
   }
   return (
     <MobileLayout>
+      <RangeSlider />
       <CategoryBar categoryNames={categoryNames} onClick={setCategoryName} />
       <TodoList list={filteredTodos} onAddTodo={addTodo} />
       <div>
-        <p>할일 찾기 페이지입니다.</p>
         <div>
           <Link to="/todos">
             <button>오늘 할일</button>
