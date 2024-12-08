@@ -3,7 +3,10 @@ import { MobileLayout } from '../layout/MobileLayout'
 import useProgressTimerPage from '../hooks/useProgressTimerPage'
 
 const ProgressTimer = () => {
-  const { isShowQuitPopup, timeLeft, setShowQuitPopup, handleClickTimeStop, formatTime } = useProgressTimerPage();
+  const { 
+    isShowQuitPopup, isRunning, timeLeft, 
+    setShowQuitPopup, handleClickTimeStop, formatTime, 
+  } = useProgressTimerPage();
   
   return (
     <MobileLayout>
@@ -15,7 +18,7 @@ const ProgressTimer = () => {
         </p>
         <div>{formatTime(timeLeft)}</div>
         <div>프로그레스바</div>
-        <button onClick={handleClickTimeStop}>일시정지</button>
+        <button onClick={handleClickTimeStop}>{isRunning ? '일시정지' : '다시시작'}</button>
         <button onClick={() => setShowQuitPopup(true)}>그만두기</button>
       </div>
       {isShowQuitPopup && (
