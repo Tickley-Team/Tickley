@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useSpareTimeStore } from './stores/spareTimeStore'
+import { Link } from "react-router"
 
 const Todos = () => {
   const [addLayerStatus, setAddLayerStatus] = useState(false)
@@ -81,6 +82,17 @@ const Todos = () => {
         </div>
       )}
       {/* 할일 등록하는 바텀 시트 모달 END */}
+      <div>
+        <Link to="/todos">
+          <button>오늘 할일</button>
+        </Link>
+        <Link to="/todos/find">
+          <button>할일 찾기</button>
+        </Link>
+        <Link to="/todos/memory">
+          <button>기록</button>
+        </Link>
+      </div>
     </div>
   )
 }

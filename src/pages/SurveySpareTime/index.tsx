@@ -1,11 +1,11 @@
 import { useCallback } from 'react'
 import { useNavigate } from 'react-router'
-import { useSpareTimeStore } from '../stores/spareTimeStore'
+import { useRecommendTodoFilterStore } from '../../stores/recommendTodoFilterStore'
 
 const SurveySpareTime = () => {
   const navigate = useNavigate()
   const handleClickButton = useCallback(() => {
-    navigate('/todos-find')
+    navigate('/todos/find')
   }, [])
   return (
     <>
@@ -21,7 +21,7 @@ const SurveySpareTime = () => {
  * @returns
  */
 const RangeSlider = () => {
-  const { spareTime, setSpareTime } = useSpareTimeStore()
+  const { spareTime, setSpareTime } = useRecommendTodoFilterStore()
   //   const [value, setValue] = useState(0)
 
   const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
