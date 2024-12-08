@@ -1,19 +1,20 @@
-import { useState } from 'react'
-import { Link } from 'react-router'
-import { TodoItem } from '../types'
-import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
-import { DateNowToUnix } from '../utils'
-import { useLocalStorage } from '../hooks/useLocalStorage'
-import { RangeSlider } from '../components/RangeSlider'
-import addIcon from '../assets/icons/addIcon.svg'
 import {
-  TextField,
-  SwipeableDrawer,
+  Backdrop,
   Box,
   Popper,
-  Backdrop,
+  SwipeableDrawer,
+  TextField,
 } from '@mui/material'
+import { useState } from 'react'
+import { Link, useNavigate } from 'react-router'
+import addIcon from '../assets/icons/addIcon.svg'
+import { RangeSlider } from '../components/RangeSlider'
+import { useLocalStorage } from '../hooks/useLocalStorage'
 import { MobileLayout } from '../layout/MobileLayout'
+import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
+import { useTimeLeftStore } from '../stores/timeLeftStore'
+import { TodoItem } from '../types'
+import { DateNowToUnix } from '../utils'
 
 const Todos = () => {
   const [isAddLayerOpen, setIsAddLayerOpen] = useState(false)
@@ -101,7 +102,6 @@ const Todos = () => {
         )}
       </div>
       {/* 할일 추가/볼것 추가 모달 START */}
-
       <Backdrop
         open={isAddLayerOpen}
         onClick={() => {
@@ -137,7 +137,6 @@ const Todos = () => {
           </Box>
         </Popper>
       </Backdrop>
-
       {/* 할일 추가/볼것 추가 모달 END */}
 
       {/* 할일 등록하는 바텀 시트 모달 START */}
@@ -181,6 +180,16 @@ const Todos = () => {
 export default Todos
 
 const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
+  const navigate = useNavigate()
+  const { timeLeft, setTimeLeft } = useTimeLeftStore()
+
+  const handleTodoItemStatus = () => {
+    if (itemStatus === 'ready') {
+      setTimeLeft(estimateTime)
+      navigate('/timer/progress')
+    }
+  }
+
   return (
     <div>
       <Box style={{ flex: 'column' }}>
@@ -189,7 +198,13 @@ const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
           <div>{title}</div>
           <div>{`${estimateTime}분`}</div>
         </Box>
-        <Box>{itemStatus}</Box>
+        <Box>
+          {itemStatus === 'ready' ? (
+            <button onClick={handleTodoItemStatus}>{itemStatus}</button>
+          ) : (
+            <p>완료 아이콘 넣기</p>
+          )}
+        </Box>
       </Box>
     </div>
   )
