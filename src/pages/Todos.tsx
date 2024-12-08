@@ -1,6 +1,5 @@
 import { useState } from 'react'
-import { useSpareTimeStore } from './stores/spareTimeStore'
-import { Link } from "react-router"
+import { Link } from 'react-router'
 
 const Todos = () => {
   const [addLayerStatus, setAddLayerStatus] = useState(false)
@@ -72,7 +71,7 @@ const Todos = () => {
             value={title}
             onChange={handleChangeTitle}
           />
-          <RangeSlider />
+          {/* <RangeSlider /> */}
           <div>
             <button onClick={handleCancel}>취소</button>
             <button disabled={!title} onClick={handleSubmit}>
@@ -93,33 +92,6 @@ const Todos = () => {
           <button>기록</button>
         </Link>
       </div>
-    </div>
-  )
-}
-
-const RangeSlider = () => {
-  const { spareTime, setSpareTime } = useSpareTimeStore()
-  //   const [value, setValue] = useState(0)
-
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSpareTime(Number(event.target.value))
-  }
-
-  return (
-    <div className="range-slider">
-      <label htmlFor="range">틈새시간</label>
-      <input
-        id="range"
-        type="range"
-        min="0"
-        max="4"
-        step="1"
-        value={spareTime}
-        onChange={handleChange}
-        className="slider"
-      />
-      <div className="labels"></div>
-      <div className="value">{spareTime}</div>
     </div>
   )
 }
