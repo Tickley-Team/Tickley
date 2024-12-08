@@ -71,7 +71,7 @@ const Todos = () => {
             value={title}
             onChange={handleChangeTitle}
           />
-          <RangeSlider />
+          {/* <RangeSlider /> */}
           <div>
             <button onClick={handleCancel}>취소</button>
             <button disabled={!title} onClick={handleSubmit}>

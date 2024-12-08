@@ -1,5 +1,5 @@
 import { useLoaderData, Link } from 'react-router'
-import { Button, Stack } from '@mui/material'
+import { Box, Button, Stack } from '@mui/material'
 import { useFilterTodos } from '../hooks/useFilteredTodos'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { DateNowToUnix } from '../utils'
@@ -9,6 +9,7 @@ import {
   TodoItem,
   TodoRecommendItemType,
 } from '../types'
+import { MobileLayout } from '../layout/MobileLayout'
 
 const TodosFind = () => {
   const todosMockData = useLoaderData<RecommendTodo[]>()?.map((todo) => ({
@@ -29,7 +30,7 @@ const TodosFind = () => {
     })
   }
   return (
-    <div>
+    <MobileLayout>
       <CategoryBar categoryNames={categoryNames} onClick={setCategoryName} />
       <TodoList list={filteredTodos} onAddTodo={addTodo} />
       <div>
@@ -46,7 +47,7 @@ const TodosFind = () => {
           </Link>
         </div>
       </div>
-    </div>
+    </MobileLayout>
   )
 }
 
@@ -77,7 +78,7 @@ type CategoryBarProps = {
 }
 export const CategoryBar = ({ categoryNames, onClick }: CategoryBarProps) => {
   return (
-    <>
+    <Box sx={{ display: 'flex' }}>
       {categoryNames.map((categoryName, idx) => (
         <Button
           key={`${categoryName}_${idx}`}
@@ -87,7 +88,7 @@ export const CategoryBar = ({ categoryNames, onClick }: CategoryBarProps) => {
           {categoryName}
         </Button>
       ))}
-    </>
+    </Box>
   )
 }
 
@@ -104,11 +105,11 @@ export const TodoRecommendItem = ({
       <div className={'icon'}>
         <img src="" />
       </div>
-      <Stack>
-        <p>{title}</p>
-        <span>{estimateTime}분</span>
-        <p>할일에 대한 설명랗기하기하기 </p>
-      </Stack>
+
+      <p>{title}</p>
+      <span>{estimateTime}분</span>
+      <p>할일에 대한 설명랗기하기하기 </p>
+
       <button onClick={onClick}>plus button</button>
     </Stack>
   )

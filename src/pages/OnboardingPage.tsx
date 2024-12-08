@@ -1,7 +1,8 @@
-import useOnboarding from "../hooks/useOnboarding";
+import useOnboarding from '../hooks/useOnboarding'
+import { MobileLayout } from '../layout/MobileLayout'
 
 const OnboardingPage = () => {
-  const { onboardingId, clickNext, clickSkip } = useOnboarding();
+  const { onboardingId, clickNext, clickSkip } = useOnboarding()
 
   const messages = {
     message: [
@@ -10,19 +11,20 @@ const OnboardingPage = () => {
       '<p>바쁜 일상 속 플려보내기 쉬운 시간을</p><p>이제는 놓치지 않을 수 있도록 도와드릴게요!</p>',
       '<p>티끌 같은 시간을 쌓아 태산 같은 변화를</p><p>저희와 함께 만들어 봐요!</p>',
     ],
-    nextUrl: [
-      '/onboarding/1',
-      '/onboarding/2',
-      '/onboarding/3',
-      '/survey',
-    ],
+    nextUrl: ['/onboarding/1', '/onboarding/2', '/onboarding/3', '/survey'],
   }
   return (
-    <div>
-        <div dangerouslySetInnerHTML={{ __html: messages.message[onboardingId] }} />
-        <button onClick={() => clickNext(messages.nextUrl[onboardingId])}>다음</button>
+    <MobileLayout>
+      <div>
+        <div
+          dangerouslySetInnerHTML={{ __html: messages.message[onboardingId] }}
+        />
+        <button onClick={() => clickNext(messages.nextUrl[onboardingId])}>
+          다음
+        </button>
         {onboardingId !== 4 && <button onClick={clickSkip}>건너뛰기</button>}
-    </div>
+      </div>
+    </MobileLayout>
   )
 }
 

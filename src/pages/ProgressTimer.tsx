@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import ProgressTimerQuitPopup from '../components/ProgressTimerQuitPopup'
+import { MobileLayout } from '../layout/MobileLayout'
 
 const ProgressTimer = () => {
   const [isShowQuitPopup, setShowQuitPopup] = useState(false)
@@ -8,7 +9,7 @@ const ProgressTimer = () => {
     // TODO: 시간 멈추기
   }
   return (
-    <>
+    <MobileLayout>
       <div>
         <h1>15분 명상하기</h1>
         <p>
@@ -23,7 +24,7 @@ const ProgressTimer = () => {
       {isShowQuitPopup && (
         <ProgressTimerQuitPopup onClickClose={() => setShowQuitPopup(false)} />
       )}
-    </>
+    </MobileLayout>
   )
 }
 
