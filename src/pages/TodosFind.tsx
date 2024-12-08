@@ -1,5 +1,5 @@
 import { useLoaderData, Link } from 'react-router'
-import { Box, Button, Stack } from '@mui/material'
+import { BottomNavigation, Box, Button, Stack } from '@mui/material'
 import { useFilterTodos } from '../hooks/useFilteredTodos'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { DateNowToUnix } from '../utils'
@@ -11,6 +11,7 @@ import {
 } from '../types'
 import { MobileLayout } from '../layout/MobileLayout'
 import { RangeSlider } from '../components/RangeSlider'
+import BottomNavbar from '../components/BottomNavbar'
 
 const TodosFind = () => {
   const todosMockData = useLoaderData<RecommendTodo[]>()?.map((todo) => ({
@@ -36,17 +37,8 @@ const TodosFind = () => {
       <CategoryBar categoryNames={categoryNames} onClick={setCategoryName} />
       <TodoList list={filteredTodos} onAddTodo={addTodo} />
       <div>
-        <div>
-          <Link to="/todos">
-            <button>오늘 할일</button>
-          </Link>
-          <Link to="/todos/find">
-            <button>할일 찾기</button>
-          </Link>
-          <Link to="/todos/memory">
-            <button>기록</button>
-          </Link>
-        </div>
+        {/* 하단 고정 네비게이션바*/}
+        <BottomNavbar />
       </div>
     </MobileLayout>
   )

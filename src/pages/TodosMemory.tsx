@@ -1,9 +1,8 @@
 import { useState } from 'react'
-import { Link } from 'react-router'
-
 import TodoMemoryDatePopup from '../components/TodoMemoryDatePopup'
 import TodoMemoryColorStandardPopup from '../components/TodoMemoryColorStandardPopup'
 import { MobileLayout } from '../layout/MobileLayout'
+import BottomNavbar from '../components/BottomNavbar'
 
 const TodosMemory = () => {
   const [isShowDatePopup, setShowDatePopup] = useState(false)
@@ -26,17 +25,7 @@ const TodosMemory = () => {
           </button>
           <p>잔디영역</p>
         </section>
-        <div>
-          <Link to="/todos">
-            <button>오늘 할일</button>
-          </Link>
-          <Link to="/todos/find">
-            <button>할일 찾기</button>
-          </Link>
-          <Link to="/todos/memory">
-            <button>기록</button>
-          </Link>
-        </div>
+        <BottomNavbar />
       </div>
       {isShowDatePopup && (
         <TodoMemoryDatePopup onClickClose={() => setShowDatePopup(false)} />
