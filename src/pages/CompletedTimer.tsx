@@ -12,7 +12,7 @@ const CompletedTimer = () => {
       <div>
         <h1>15분 명상하기</h1>
         <h2>완료했어요!</h2>
-        <img alt="이미지" />
+        <img src='/src/assets/illust.svg' alt="이미지" />
         <button onClick={handleClickDone}>완료</button>
       </div>
     </MobileLayout>

@@ -1,3 +1,4 @@
+import AddTodoMainButton from '../components/AddTodoMainButton'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { TodoItem } from '../types'
@@ -19,6 +20,7 @@ const Todos = () => {
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false)
   const [title, setTitle] = useState('')
   const { spareTime } = useRecommendTodoFilterStore()
+  const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
 
   const { addToStoredValue, value: todoList } = useLocalStorage<TodoItem[]>(
     [],
@@ -32,7 +34,10 @@ const Todos = () => {
       new Date(DateNowToUnix()).toDateString(),
   )
 
-  const handleAddLayerOpen = () => {
+  const handleAddLayerOpen = (event: React.MouseEvent<HTMLElement>) => {
+    console.log('anchor', event.currentTarget)
+
+    setAnchorEl(anchorEl ? null : event.currentTarget)
     setIsAddLayerOpen(true)
   }
 
@@ -74,6 +79,10 @@ const Todos = () => {
   return (
     <div>
       <p>할일 목록 페이지입니다.</p>
+
+      {/* 할 일 추가 버튼 */}
+      <AddTodoMainButton />
+
       {filteredTodoList.map((todo) => (
         <Todo
           key={todo.registeredDate.toString()}
@@ -87,13 +96,15 @@ const Todos = () => {
       {/* 그리고 할일 추가를 클릭하면 할일 추가/볼것 추가 모달이 사라지고 할일 등록하는 바텀 시트 모달이 뜸 */}
       {/* 볼것 추가를 클릭하면 얼럿으로 처리 */}
       {/* X를 누르게 되면 할일 추가/볼것 추가 모달이 사라짐 */}
-      {!isBottomSheetOpen && (
-        <button
-          onClick={isAddLayerOpen ? handleAddLayerClose : handleAddLayerOpen}
-        >
-          {isAddLayerOpen ? 'X' : '+'}
-        </button>
-      )}
+      <div>
+        {!isBottomSheetOpen && (
+          <button
+            onClick={isAddLayerOpen ? handleAddLayerClose : handleAddLayerOpen}
+          >
+            {isAddLayerOpen ? 'X' : '+'}
+          </button>
+        )}
+      </div>
       {/* 할일 추가/볼것 추가 모달 START */}
 
       <Backdrop
@@ -105,8 +116,8 @@ const Todos = () => {
           // Note: The following zIndex style is specifically for documentation purposes and may not be necessary in your application.
           sx={{ zIndex: 12000, backgroundColor: '#fff', padding: '24px' }}
           open={isAddLayerOpen}
-          anchorEl={''}
-          placement={'bottom-end'}
+          anchorEl={anchorEl}
+          placement={'top-end'}
           transition
         >
           <Box className="add-layer">
@@ -159,6 +170,7 @@ const Todos = () => {
         </SwipeableDrawer>
       )}
       {/* 할일 등록하는 바텀 시트 모달 END */}
+
       <div>
         <Link to="/todos">
           <button>오늘 할일</button>

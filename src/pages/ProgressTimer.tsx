@@ -1,13 +1,14 @@
-import { useState } from 'react'
-
 import ProgressTimerQuitPopup from '../components/ProgressTimerQuitPopup'
 import { MobileLayout } from '../layout/MobileLayout'
+import useProgressTimerPage from '../hooks/useProgressTimerPage'
+import { LinearProgress } from '@mui/material';
 
 const ProgressTimer = () => {
-  const [isShowQuitPopup, setShowQuitPopup] = useState(false)
-  const handleClickTimeStop = () => {
-    // TODO: 시간 멈추기
-  }
+  const { 
+    isShowQuitPopup, isRunning, totalTime,timeLeft, 
+    handleClickSwitchQuit, handleClickTimeStop, formatTime, 
+  } = useProgressTimerPage();
+  
   return (
     <MobileLayout>
       <div>
@@ -16,14 +17,12 @@ const ProgressTimer = () => {
           자투리시간 15분간 <br />
           몸과 마음을 리프레시 해보아요
         </p>
-        <div>시간 영역</div>
-        <div>프로그레스바</div>
-        <button onClick={handleClickTimeStop}>일시정지</button>
-        <button onClick={() => setShowQuitPopup(true)}>그만두기</button>
+        <div>{formatTime(timeLeft)}</div>
+        <LinearProgress variant="determinate" value={((totalTime - timeLeft) / totalTime) * 100} />
+        <button onClick={handleClickTimeStop}>{isRunning ? '일시정지' : '다시시작'}</button>
+        <button onClick={() => handleClickSwitchQuit(true)}>그만두기</button>
       </div>
-      {isShowQuitPopup && (
-        <ProgressTimerQuitPopup onClickClose={() => setShowQuitPopup(false)} />
-      )}
+      <ProgressTimerQuitPopup open={isShowQuitPopup} onClickClose={() => handleClickSwitchQuit(false)} />
     </MobileLayout>
   )
 }
