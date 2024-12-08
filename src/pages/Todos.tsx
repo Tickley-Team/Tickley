@@ -15,6 +15,7 @@ import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
 import { useTimeLeftStore } from '../stores/timeLeftStore'
 import { TodoItem } from '../types'
 import { DateNowToUnix } from '../utils'
+import { BasicDialog } from '../components/BasicDialog'
 
 const Todos = () => {
   const [isAddLayerOpen, setIsAddLayerOpen] = useState(false)
@@ -22,7 +23,7 @@ const Todos = () => {
   const [title, setTitle] = useState('')
   const { spareTime } = useRecommendTodoFilterStore()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
-
+  const [isDialogOpen, setIsDialogOpen] = useState(false)
   const { addToStoredValue, value: todoList } = useLocalStorage<TodoItem[]>(
     [],
     'todos',
@@ -72,11 +73,13 @@ const Todos = () => {
     setTitle('')
     setIsBottomSheetOpen(false)
   }
-
+  const handleCalendarClicked = () => {
+    setIsDialogOpen(true)
+  }
   return (
     <MobileLayout>
       <p>할일 목록 페이지입니다.</p>
-
+      <Box onClick={handleCalendarClicked}>2024년 9월</Box>
       {/* 할 일 추가 버튼 */}
       {/* <AddTodoMainButton /> */}
       <ul>
@@ -162,6 +165,10 @@ const Todos = () => {
       )}
       {/* 할일 등록하는 바텀 시트 모달 END */}
 
+      <BasicDialog
+        isDialogOpen={isDialogOpen}
+        handleClose={() => setIsDialogOpen(false)}
+      />
       <div>
         <Link to="/todos">
           <button>오늘 할일</button>
