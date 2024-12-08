@@ -1,17 +1,43 @@
 import { useState } from 'react'
 import { Link } from 'react-router'
+import { TodoItem } from '../types'
+import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
+import { DateNowToUnix } from '../utils'
+import { useLocalStorage } from '../hooks/useLocalStorage'
+import { RangeSlider } from '../components/RangeSlider'
+import addIcon from '../assets/icons/addIcon.svg'
+import {
+  TextField,
+  SwipeableDrawer,
+  Box,
+  Popper,
+  Backdrop,
+} from '@mui/material'
 
 const Todos = () => {
-  const [addLayerStatus, setAddLayerStatus] = useState(false)
-  const [bottomSheetStatus, setBottomSheetStatus] = useState(false)
+  const [isAddLayerOpen, setIsAddLayerOpen] = useState(false)
+  const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false)
   const [title, setTitle] = useState('')
+  const { spareTime } = useRecommendTodoFilterStore()
+
+  const { addToStoredValue, value: todoList } = useLocalStorage<TodoItem[]>(
+    [],
+    'todos',
+  )
+  console.log('todos', todoList)
+
+  const filteredTodoList = todoList.filter(
+    (todo) =>
+      new Date(todo.registeredDate).toDateString() ==
+      new Date(DateNowToUnix()).toDateString(),
+  )
 
   const handleAddLayerOpen = () => {
-    setAddLayerStatus(true)
+    setIsAddLayerOpen(true)
   }
 
   const handleAddLayerClose = () => {
-    setAddLayerStatus(false)
+    setIsAddLayerOpen(false)
   }
 
   const handleAddUrl = () => {
@@ -19,66 +45,118 @@ const Todos = () => {
   }
 
   const handleAddTodoLayer = () => {
-    setAddLayerStatus(false)
-    setBottomSheetStatus(true)
+    setIsAddLayerOpen(false)
+    setIsBottomSheetOpen(true)
   }
 
   const handleCancel = () => {
-    setBottomSheetStatus(false)
     setTitle('')
+    setIsBottomSheetOpen(false)
   }
 
   const handleChangeTitle = (e: React.ChangeEvent<HTMLInputElement>) => {
     setTitle(e.target.value)
   }
 
-  const handleSubmit = () => {}
+  const handleSubmit = () => {
+    // title,
+    const todoItem: TodoItem = {
+      title,
+      estimateTime: spareTime,
+      itemStatus: 'ready',
+      registeredDate: DateNowToUnix(),
+    }
+    addToStoredValue(todoItem)
+    setTitle('')
+    setIsBottomSheetOpen(false)
+  }
 
   return (
     <div>
       <p>할일 목록 페이지입니다.</p>
+      {filteredTodoList.map((todo) => (
+        <Todo
+          key={todo.registeredDate.toString()}
+          title={todo.title}
+          estimateTime={todo.estimateTime}
+          itemStatus={'ready'}
+          registeredDate={todo.registeredDate}
+        />
+      ))}
       {/* + 버튼을 눌렀을 때 할일 추가/볼것 추가 모달이 뜸(할일 목록 부분 dim 처리됨(이 부분은 css에서)) */}
       {/* 그리고 할일 추가를 클릭하면 할일 추가/볼것 추가 모달이 사라지고 할일 등록하는 바텀 시트 모달이 뜸 */}
       {/* 볼것 추가를 클릭하면 얼럿으로 처리 */}
       {/* X를 누르게 되면 할일 추가/볼것 추가 모달이 사라짐 */}
-      {!bottomSheetStatus && (
+      {!isBottomSheetOpen && (
         <button
-          onClick={addLayerStatus ? handleAddLayerClose : handleAddLayerOpen}
+          onClick={isAddLayerOpen ? handleAddLayerClose : handleAddLayerOpen}
         >
-          {addLayerStatus ? 'X' : '+'}
+          {isAddLayerOpen ? 'X' : '+'}
         </button>
       )}
       {/* 할일 추가/볼것 추가 모달 START */}
-      {addLayerStatus && (
-        <div
-          style={{ backgroundColor: 'skyblue' }}
-          onClick={handleAddLayerClose}
+
+      <Backdrop
+        sx={(theme) => ({ color: '#fff' })}
+        open={isAddLayerOpen}
+        onClick={() => setIsAddLayerOpen(false)}
+      >
+        <Popper
+          // Note: The following zIndex style is specifically for documentation purposes and may not be necessary in your application.
+          sx={{ zIndex: 12000, backgroundColor: '#fff', padding: '24px' }}
+          open={isAddLayerOpen}
+          anchorEl={''}
+          placement={'bottom-end'}
+          transition
         >
-          <div className="add-layer">
-            <button onClick={handleAddTodoLayer}>할일 추가</button>
-            <button onClick={handleAddUrl}>볼 것(URL 추가)</button>
-          </div>
-        </div>
-      )}
+          <Box className="add-layer">
+            <Box
+              display={'flex'}
+              gap={'12px'}
+              marginBottom={'16px'}
+              alignItems={'center'}
+              onClick={handleAddTodoLayer}
+              style={{ cursor: 'pointer' }}
+            >
+              <img src={addIcon} alt={'addIcon'} />
+              <p>할일 추가</p>
+            </Box>
+            <Box
+              display={'flex'}
+              gap={'12px'}
+              alignItems={'center'}
+              style={{ cursor: 'pointer' }}
+              onClick={handleAddUrl}
+            >
+              <img src={addIcon} alt={'addIcon'} />
+              <p>볼 것(URL 추가)</p>
+            </Box>
+          </Box>
+        </Popper>
+      </Backdrop>
+
       {/* 할일 추가/볼것 추가 모달 END */}
 
       {/* 할일 등록하는 바텀 시트 모달 START */}
-      {bottomSheetStatus && (
-        <div>
-          <input
-            type="text"
-            placeholder="새 할일 입력"
+      {isBottomSheetOpen && (
+        <SwipeableDrawer
+          anchor={'bottom'}
+          open={isBottomSheetOpen}
+          onOpen={() => {}}
+          onClose={() => {}}
+        >
+          <TextField
+            label="새 할일 입력"
+            variant="outlined"
             value={title}
             onChange={handleChangeTitle}
           />
-          {/* <RangeSlider /> */}
-          <div>
-            <button onClick={handleCancel}>취소</button>
-            <button disabled={!title} onClick={handleSubmit}>
-              추가
-            </button>
-          </div>
-        </div>
+          <RangeSlider />
+          <button onClick={handleCancel}>취소</button>
+          <button disabled={!title} onClick={handleSubmit}>
+            추가
+          </button>
+        </SwipeableDrawer>
       )}
       {/* 할일 등록하는 바텀 시트 모달 END */}
       <div>
@@ -96,30 +174,19 @@ const Todos = () => {
   )
 }
 
-const RangeSlider = () => {
-  const [spareTime, setSpareTime] = useState(0)
+export default Todos
 
-  const handleChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setSpareTime(Number(event.target.value))
-  }
-
+const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
   return (
-    <div className="range-slider">
-      <label htmlFor="range">Select time range:</label>
-      <input
-        id="range"
-        type="range"
-        min="0"
-        max="4"
-        step="1"
-        value={spareTime}
-        onChange={handleChange}
-        className="slider"
-      />
-      <div className="labels"></div>
-      <div className="value">{spareTime}</div>
+    <div>
+      <Box style={{ flex: 'column' }}>
+        <Box>
+          <div>{<img src="#" alt="" />}</div>
+          <div>{title}</div>
+          <div>{`${estimateTime}분`}</div>
+        </Box>
+        <Box>{itemStatus}</Box>
+      </Box>
     </div>
   )
 }
-
-export default Todos

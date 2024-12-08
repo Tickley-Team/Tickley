@@ -20,7 +20,7 @@ const TodosFind = () => {
   const { categoryNames, setCategoryName, filteredTodos } =
     useFilterTodos(todosMockData)
 
-  const { addToStoredValue } = useLocalStorage<TodoItem[]>('todos', [])
+  const { addToStoredValue } = useLocalStorage<TodoItem[]>([], 'todos')
 
   const addTodo = (selectedRecommendTodo: RecommendTodo) => {
     addToStoredValue({
