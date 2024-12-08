@@ -1,4 +1,3 @@
-import AddTodoMainButton from '../components/AddTodoMainButton'
 import { useState } from 'react'
 import { Link } from 'react-router'
 import { TodoItem } from '../types'
@@ -40,10 +39,6 @@ const Todos = () => {
 
     setAnchorEl(anchorEl ? null : event.currentTarget)
     setIsAddLayerOpen(true)
-  }
-
-  const handleAddLayerClose = () => {
-    setIsAddLayerOpen(false)
   }
 
   const handleAddUrl = () => {
@@ -108,7 +103,6 @@ const Todos = () => {
       {/* 할일 추가/볼것 추가 모달 START */}
 
       <Backdrop
-        sx={(theme) => ({ color: '#fff' })}
         open={isAddLayerOpen}
         onClick={() => {
           setIsAddLayerOpen(false)
