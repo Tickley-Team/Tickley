@@ -1,6 +1,4 @@
 :root {
-  font-family: Pretandard, system-ui, Avenir, Helvetica, Arial, sans-serif;
-
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -9,7 +7,7 @@
 }
 
 @font-face {
-  font-family: 'S-CoreDream-5Medium';
+  font-family: 'S-CoreDream';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff')
     format('woff');
   font-weight: 500;
@@ -17,7 +15,7 @@
 }
 
 @font-face {
-  font-family: 'S-CoreDream-6Bold';
+  font-family: 'S-CoreDream';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-6Bold.woff')
     format('woff');
   font-weight: 600;
@@ -25,7 +23,7 @@
 }
 
 @font-face {
-  font-family: 'S-CoreDream-8Heavy';
+  font-family: 'S-CoreDream';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-8Heavy.woff')
     format('woff');
   font-weight: 800;
@@ -33,7 +31,7 @@
 }
 
 @font-face {
-  font-family: 'S-CoreDream-7ExtraBold';
+  font-family: 'S-CoreDream';
   src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-7ExtraBold.woff')
     format('woff');
   font-weight: 700;

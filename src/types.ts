@@ -3,7 +3,7 @@ export interface TodoItem {
   estimateTime: number
   itemStatus: 'ready' | 'done'
   registeredDate: number //unix time,보여줄 때만
-  // 추가로 아이콘이 생길 수 있음
+  categoryName: string
 }
 
 export type TodoList = TodoItem[]

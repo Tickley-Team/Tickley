@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { TodoItem } from '../types'
 
 export const useLocalStorage = <T>(initialValue: T, key: string = 'todos') => {
   const [value, setValue] = useState<T>(() => {
@@ -21,5 +22,20 @@ export const useLocalStorage = <T>(initialValue: T, key: string = 'todos') => {
     localStorage.setItem(key, JSON.stringify(updatedValue))
   }
 
-  return { value, addToStoredValue }
+  const updateStoredValue = (
+    registeredDate: TodoItem['registeredDate'],
+    updateValue: Partial<TodoItem>,
+  ) => {
+    const existingTodo = localStorage.getItem('todos')
+    if (!existingTodo) return
+
+    const updatedTodos = JSON.parse(existingTodo).map((todo: TodoItem) =>
+      todo.registeredDate === registeredDate
+        ? { ...todo, ...updateValue } // 2️⃣ registeredDate가 일치하면 updateValue로 덮어쓰기
+        : todo,
+    )
+
+    localStorage.setItem('todos', JSON.stringify(updatedTodos))
+  }
+  return { value, addToStoredValue, updateStoredValue }
 }

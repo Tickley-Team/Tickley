@@ -18,12 +18,13 @@ import { RangeSlider } from '../components/RangeSlider'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { MobileLayout } from '../layout/MobileLayout'
 import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
-import { useTimeLeftStore } from '../stores/timeLeftStore'
 import { TodoItem } from '../types'
 import { DateNowToUnix } from '../utils'
 import readyStatusIcon from '../assets/icons/readyStatusIcon.svg'
 import doneStatusIcon from '../assets/icons/doneStatusIcon.svg'
 import restIcon from '../assets/icons/rest.svg'
+import { useTodoStore } from '../stores/todoStore'
+import { CategoryBar, CategoryMapper } from './TodosFind'
 
 const Todos = () => {
   const theme = useTheme()
@@ -33,6 +34,7 @@ const Todos = () => {
   const { spareTime } = useRecommendTodoFilterStore()
   const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null)
   const [isDialogOpen, setIsDialogOpen] = useState(false)
+  const [categoryName, setCategoryName] = useState('')
   const { addToStoredValue, value: todoList } = useLocalStorage<TodoItem[]>(
     [],
     'todos',
@@ -77,6 +79,7 @@ const Todos = () => {
       estimateTime: spareTime,
       itemStatus: 'ready',
       registeredDate: DateNowToUnix(),
+      categoryName,
     }
     addToStoredValue(todoItem)
     setTitle('')
@@ -85,6 +88,8 @@ const Todos = () => {
   const handleCalendarClicked = () => {
     setIsDialogOpen(true)
   }
+
+  const categoryNames = CategoryMapper.map((category) => category.categoryName)
   return (
     <MobileLayout>
       <div
@@ -106,7 +111,6 @@ const Todos = () => {
       >
         <Box onClick={handleCalendarClicked}>2024년 9월</Box>
         {/* 할 일 추가 버튼 */}
-        {/* <AddTodoMainButton /> */}
         <div
           style={{
             // width: '100%',
@@ -152,8 +156,9 @@ const Todos = () => {
                 key={todo.registeredDate.toString()}
                 title={todo.title}
                 estimateTime={todo.estimateTime}
-                itemStatus={'ready'}
+                itemStatus={todo.itemStatus}
                 registeredDate={todo.registeredDate}
+                categoryName={todo.categoryName}
               />
             ))}
           </div>
@@ -244,6 +249,11 @@ const Todos = () => {
                 },
               }}
             >
+              <CategoryBar
+                categoryNames={categoryNames}
+                onClick={setCategoryName}
+                selectedCategoryName={categoryName}
+              />
               <TextField
                 label="새 할일 입력"
                 variant="outlined"
@@ -339,13 +349,19 @@ const Todos = () => {
 
 export default Todos
 
-const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
+const Todo = ({
+  estimateTime,
+  itemStatus,
+  title,
+  registeredDate,
+  categoryName,
+}: TodoItem) => {
+  const { addTodo } = useTodoStore()
   const navigate = useNavigate()
-  const { setTimeLeft } = useTimeLeftStore()
   const theme = useTheme()
   const handleTodoItemStatus = () => {
     if (itemStatus === 'ready') {
-      setTimeLeft(estimateTime)
+      addTodo({ categoryName, estimateTime, itemStatus, registeredDate, title })
       navigate('/timer/progress')
     }
   }
@@ -364,7 +380,13 @@ const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
             <img src={restIcon} alt={'restIcon'} />
           </Box>
           <Box>
-            <Box display="flex">
+            <Box
+              display="flex"
+              style={{
+                textDecorationLine:
+                  itemStatus === 'done' ? 'line-through' : 'none',
+              }}
+            >
               <Typography
                 variant="title-5-medium-16"
                 fontWeight={600}
