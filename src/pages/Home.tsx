@@ -1,15 +1,10 @@
+import { Typography, useTheme } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import guideSpeechBubble from '../assets/guideSpeechBubble.svg'
 import mainTickley from '../assets/mainTickley.svg'
 import { CTAButton } from '../components/Button'
 import { MobileLayout } from '../layout/MobileLayout'
-
-const tickleyFontStyle = {
-  fontSize: '48px',
-  marginTop: '184px',
-  marginBottom: '50px',
-}
 
 interface MockData {
   isFirstVisit: boolean
@@ -22,6 +17,7 @@ const mockData: MockData = {
 }
 
 const Home = () => {
+  const theme = useTheme()
   const navigate = useNavigate()
   const [isFirstVisit] = useState(mockData.isFirstVisit)
   const [hasTodoData] = useState(mockData.hasTodoData)
@@ -45,7 +41,12 @@ const Home = () => {
 
   return (
     <MobileLayout>
-      <p style={tickleyFontStyle}>티클리</p>
+      <Typography
+        variant="headline-8-heavy"
+        style={{ marginTop: '184px', marginBottom: '50px' }}
+      >
+        티클리
+      </Typography>
       <img src={guideSpeechBubble} alt={'guideSpeechBubble'} />
       <img src={mainTickley} alt={'mainTickley'} />
       {/* 시작하기 버튼 누르면 온보딩 화면으로 이동 */}
