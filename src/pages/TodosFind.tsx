@@ -20,7 +20,7 @@ import exercise from '../assets/icons/exercise.svg'
 import chore from '../assets/icons/chore.svg'
 import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
 
-const CategoryMapper = [
+export const CategoryMapper = [
   {
     categoryName: '휴식',
     icon: restIcon,
@@ -47,7 +47,6 @@ const TodosFind = () => {
 
   const todosMockData = useLoaderData<RecommendTodo[]>()?.map((todo) => ({
     ...todo,
-
     estimateTime: Number(todo.estimateTime),
   }))
 
@@ -66,6 +65,7 @@ const TodosFind = () => {
       estimateTime: selectedRecommendTodo.estimateTime,
       itemStatus: 'ready',
       registeredDate: DateNowToUnix(),
+      categoryName: selectedRecommendTodo.categoryName,
     })
 
     navigate('/todos')
@@ -119,11 +119,9 @@ export default TodosFind
 
 export const TodoList = ({
   list,
-
   onAddTodo,
 }: {
   list: RecommendTodo[]
-
   onAddTodo: (todo: RecommendTodo) => void
 }) => {
   return (
@@ -147,9 +145,7 @@ type CategoryBarProps = {
 
 export const CategoryBar = ({
   selectedCategoryName,
-
   categoryNames,
-
   onClick,
 }: CategoryBarProps) => {
   const theme = useTheme()
@@ -200,15 +196,11 @@ export type TodoRecommendItemProps = TodoRecommendItemType & {
 
 export const TodoRecommendItem = ({
   title,
-
   estimateTime,
-
   onClick,
 }: TodoRecommendItemProps) => {
   const { categoryName: selectedCategoryName } = useRecommendTodoFilterStore()
-
   const theme = useTheme()
-
   return (
     <Box
       display={'flex'}
@@ -256,19 +248,12 @@ export const TodoRecommendItem = ({
         disableElevation
         sx={{
           padding: 0,
-
           minWidth: 0,
-
           margin: 0,
-
           border: 'none',
-
           boxShadow: 'none',
-
           background: 'none',
-
           color: 'inherit',
-
           '&:hover': {
             background: 'none', // Hover 배경 제거
           },

@@ -1,25 +1,26 @@
 import { useState, useEffect } from 'react'
 import { useNavigate } from 'react-router'
+import { useTodoStore } from '../stores/todoStore'
 
 const useProgressTimerPage = () => {
   const navigate = useNavigate()
-
-  const totalTime = 15 * 60;
+  const { todo } = useTodoStore()
+  const totalTime = 15 * 60
   const [isShowQuitPopup, setShowQuitPopup] = useState(false)
   const [isRunning, setIsRunning] = useState(true)
-  const [timeLeft, setTimeLeft] = useState(totalTime)
+  const [timeLeft, setTimeLeft] = useState(todo ? todo?.estimateTime * 60 : 0)
 
   useEffect(() => {
     let timer: NodeJS.Timeout
-    
+
     if (isRunning && timeLeft > 0) {
       timer = setInterval(() => {
         setTimeLeft((prevTime) => prevTime - 1)
       }, 1000)
     }
-    
+
     if (timeLeft <= 0) {
-      navigate('/timer/completed');
+      navigate('/timer/completed')
     }
 
     return () => {
@@ -32,8 +33,12 @@ const useProgressTimerPage = () => {
   }
 
   const handleClickSwitchQuit = (isStop: boolean) => {
-    if (isStop) { setIsRunning(false) }
-    if (!isStop) { setIsRunning(true) }
+    if (isStop) {
+      setIsRunning(false)
+    }
+    if (!isStop) {
+      setIsRunning(true)
+    }
 
     setShowQuitPopup(isStop)
   }
@@ -44,7 +49,15 @@ const useProgressTimerPage = () => {
     return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}:00`
   }
 
-    return { isShowQuitPopup, isRunning, totalTime, timeLeft, handleClickSwitchQuit, handleClickTimeStop, formatTime };
+  return {
+    isShowQuitPopup,
+    isRunning,
+    totalTime,
+    timeLeft,
+    handleClickSwitchQuit,
+    handleClickTimeStop,
+    formatTime,
+  }
 }
 
-export default useProgressTimerPage;
+export default useProgressTimerPage

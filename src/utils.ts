@@ -6,4 +6,4 @@ export const delay: (ms: number) => Promise<boolean> = (ms: number) => {
   })
 }
 
-export const DateNowToUnix = () => Math.floor(Date.now() / 1000)
+export const DateNowToUnix = () => Date.now()
