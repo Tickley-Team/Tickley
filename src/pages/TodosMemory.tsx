@@ -88,7 +88,7 @@ const TodosMemory = () => {
               gridTemplateColumns: 'repeat(7, 1fr)',
               gap: '8px'
             }}>
-              {currentDays.map((day, index) => (
+              {currentDays.map((_day, index) => (
                 <div
                   key={index}
                   style={{
