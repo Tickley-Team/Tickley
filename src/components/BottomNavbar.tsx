@@ -6,7 +6,7 @@ import findTodoUnClick from '../assets/navbar/find-todos-unclick.svg'
 import todoMemoryClick from '../assets/navbar/todos-memory-click.svg'
 import todoMemoryUnClick from '../assets/navbar/todos-memory-unclick.svg'
 import './BottomNavbar.css'
-
+/** icon 변경  */
 const BottomNavbar = () => {
   const location = useLocation()
   const pathname = location.pathname
