@@ -13,10 +13,14 @@ const SurveySpareTime = () => {
   return (
     <MobileLayout>
       <Typography
-        variant="h6"
-        sx={{ fontWeight: 'bold', mb: 2, color: '#474747' }}
+        variant="title-6-bold-34"
+        sx={{
+          whiteSpace: 'pre-line',
+          textAlign: 'left',
+          marginBottom: '64px',
+        }}
       >
-        틈새 시간이 얼마나 있나요?
+        {`자투리 시간이 얼마나\n있나요?`}
       </Typography>
       <RangeSlider />
       <CTAButton onClick={handleClickButton}>할일 찾기 </CTAButton>
