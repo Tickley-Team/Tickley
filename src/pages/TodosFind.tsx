@@ -12,7 +12,6 @@ import {
 import { MobileLayout } from '../layout/MobileLayout'
 import { RangeSlider } from '../components/RangeSlider'
 import BottomNavbar from '../components/BottomNavbar'
-import { CTAButton } from '../components/Button'
 
 const TodosFind = () => {
   const todosMockData = useLoaderData<RecommendTodo[]>()?.map((todo) => ({
