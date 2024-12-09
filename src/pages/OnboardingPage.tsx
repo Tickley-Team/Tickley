@@ -1,3 +1,4 @@
+import { CTAButton } from '../components/Button'
 import useOnboarding from '../hooks/useOnboarding'
 import { MobileLayout } from '../layout/MobileLayout'
 
@@ -19,9 +20,9 @@ const OnboardingPage = () => {
         <div
           dangerouslySetInnerHTML={{ __html: messages.message[onboardingId] }}
         />
-        <button onClick={() => clickNext(messages.nextUrl[onboardingId])}>
+        <CTAButton onClick={() => clickNext(messages.nextUrl[onboardingId])}>
           다음
-        </button>
+        </CTAButton>
         {onboardingId !== 4 && <button onClick={clickSkip}>건너뛰기</button>}
       </div>
     </MobileLayout>

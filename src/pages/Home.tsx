@@ -40,10 +40,9 @@ const Home = () => {
       <div>틈새시간 할일 알려줌</div>
       <div>티끌,먼지 이미지</div>
       {/* 시작하기 버튼 누르면 온보딩 화면으로 이동 */}
-
-      <CTAButton>
-        <Link to="/onboarding/0">시작하기</Link>
-      </CTAButton>
+      <Link to="/onboarding/0" style={{ width: '100%' }}>
+        <CTAButton>시작하기</CTAButton>
+      </Link>
     </MobileLayout>
   )
 }

@@ -12,6 +12,7 @@ import { fetchRecommendTodos } from './api/fetchRecommendTodos'
 import { createBrowserRouter, RouterProvider } from 'react-router'
 import { ThemeProvider } from '@mui/material/styles'
 import { TickleyTheme } from './theme'
+import CssBaseline from '@mui/material/CssBaseline'
 
 function App() {
   const isProduction = process.env.NODE_ENV === 'production'
@@ -64,6 +65,7 @@ function App() {
   return (
     <ThemeProvider theme={TickleyTheme}>
       <RouterProvider router={router} />
+      <CssBaseline />
     </ThemeProvider>
   )
 }
