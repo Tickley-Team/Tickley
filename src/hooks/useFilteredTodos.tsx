@@ -14,5 +14,11 @@ export const useFilterTodos = (todos: Array<RecommendTodo>) => {
       Number(todo.estimateTime) <= spareTime,
   )
 
-  return { filteredTodos, categoryNames, setCategoryName, spareTime }
+  return {
+    filteredTodos,
+    categoryNames,
+    setCategoryName,
+    spareTime,
+    categoryName,
+  }
 }
