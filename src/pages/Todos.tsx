@@ -50,7 +50,7 @@ const Todos = () => {
   }
 
   const handleAddUrl = () => {
-    alert('준비중인 서비스입니다')
+    setIsDialogOpen(true)
   }
 
   const handleAddTodoLayer = () => {
