@@ -1,4 +1,4 @@
-import { Typography, useTheme } from '@mui/material'
+import { Typography } from '@mui/material'
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
 import guideSpeechBubble from '../assets/guideSpeechBubble.svg'
@@ -17,7 +17,6 @@ const mockData: MockData = {
 }
 
 const Home = () => {
-  const theme = useTheme()
   const navigate = useNavigate()
   const [isFirstVisit] = useState(mockData.isFirstVisit)
   const [hasTodoData] = useState(mockData.hasTodoData)
