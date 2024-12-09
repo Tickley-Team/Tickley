@@ -11,7 +11,7 @@ const CompletedTimer = () => {
 
   return (
     <MobileLayout>
-      <div>
+      <div style={{ marginTop: '176px', textAlign: 'center' }}>
         <Typography variant='title-6-bold-34'>15분 명상하기</Typography>
         <br />
         <Typography variant='title-5-medium-26'>완료했어요!</Typography>

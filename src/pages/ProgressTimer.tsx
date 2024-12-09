@@ -13,7 +13,7 @@ const ProgressTimer = () => {
 
   return (
     <MobileLayout>
-      <div>
+      <div style={{ marginTop: '176px', textAlign: 'center' }}>
         <Typography variant='title-6-bold-34'>15분 명상하기</Typography>
         <br />
         <Typography variant='title-5-medium-16'>자투리시간 15분간<br />몸과 마음을 리프레시 해보아요</Typography>
