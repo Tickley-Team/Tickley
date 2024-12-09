@@ -40,19 +40,14 @@ const Home = () => {
 
   return (
     <MobileLayout>
-      <Typography
-        variant="headline-8-heavy"
-        style={{ marginTop: '184px', marginBottom: '50px' }}
-      >
+      <Typography variant="headline-8-heavy" marginBottom={'50px'}>
         티클리
       </Typography>
       <img src={guideSpeechBubble} alt={'guideSpeechBubble'} />
       <img src={mainTickley} alt={'mainTickley'} />
       {/* 시작하기 버튼 누르면 온보딩 화면으로 이동 */}
       <Link to="/onboarding/0" style={{ width: '100%' }}>
-        <CTAButton style={{ marginTop: '181px', marginBottom: '48px' }}>
-          시작하기
-        </CTAButton>
+        <CTAButton>시작하기</CTAButton>
       </Link>
     </MobileLayout>
   )

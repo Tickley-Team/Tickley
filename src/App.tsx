@@ -1,5 +1,3 @@
-import './App.css'
-
 import Todos from './pages/Todos'
 import TodosFind from './pages/TodosFind'
 import SurveySpareTime from './pages/SurveySpareTime'
