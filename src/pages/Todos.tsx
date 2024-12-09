@@ -25,8 +25,6 @@ import readyStatusIcon from '../assets/icons/readyStatusIcon.svg'
 import doneStatusIcon from '../assets/icons/doneStatusIcon.svg'
 import restIcon from '../assets/icons/rest.svg'
 
-const categoryIconMapper = [{ categoryName: '휴식', icon: restIcon }]
-
 const Todos = () => {
   const theme = useTheme()
   const [isAddLayerOpen, setIsAddLayerOpen] = useState(false)
