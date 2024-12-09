@@ -1,6 +1,7 @@
 import {
   Backdrop,
   Box,
+  Button,
   Fab,
   Popper,
   SwipeableDrawer,
@@ -20,10 +21,14 @@ import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
 import { useTimeLeftStore } from '../stores/timeLeftStore'
 import { TodoItem } from '../types'
 import { DateNowToUnix } from '../utils'
+import readyStatusIcon from '../assets/icons/readyStatusIcon.svg'
+import doneStatusIcon from '../assets/icons/doneStatusIcon.svg'
+import restIcon from '../assets/icons/rest.svg'
+
+const categoryIconMapper = [{ categoryName: '휴식', icon: restIcon }]
 
 const Todos = () => {
   const theme = useTheme()
-
   const [isAddLayerOpen, setIsAddLayerOpen] = useState(false)
   const [isBottomSheetOpen, setIsBottomSheetOpen] = useState(false)
   const [title, setTitle] = useState('')
@@ -106,22 +111,44 @@ const Todos = () => {
         {/* <AddTodoMainButton /> */}
         <div
           style={{
+            // width: '100%',
             height: '520px',
             margin: '16px',
             backgroundColor: theme.palette.gray100,
             position: 'relative',
           }}
         >
-          <p>오늘 날짜</p>
           <div
             style={{
-              alignSelf: 'stretch',
+              display: 'flex',
+              padding: '16px 0',
+              width: '90%',
+              margin: '0 auto',
+            }}
+          >
+            <Typography
+              variant="title-5-medium-16"
+              fontWeight={700}
+              style={{ marginRight: '8px' }}
+            >
+              12월 9일(월)
+            </Typography>
+            <Typography
+              variant="title-5-medium-16"
+              color={theme.palette.semanticRed}
+            >
+              오늘
+            </Typography>
+          </div>
+          <div
+            style={{
               height: 0,
+              width: '90%',
+              margin: '0 auto',
               border: '1px solid',
               borderColor: theme.palette.gray400,
             }}
-          ></div>
-          <ul>
+          >
             {filteredTodoList.map((todo) => (
               <Todo
                 key={todo.registeredDate.toString()}
@@ -131,7 +158,7 @@ const Todos = () => {
                 registeredDate={todo.registeredDate}
               />
             ))}
-          </ul>
+          </div>
           {/* + 버튼을 눌렀을 때 할일 추가/볼것 추가 모달이 뜸(할일 목록 부분 dim 처리됨(이 부분은 css에서)) */}
           {/* 그리고 할일 추가를 클릭하면 할일 추가/볼것 추가 모달이 사라지고 할일 등록하는 바텀 시트 모달이 뜸 */}
           {/* 볼것 추가를 클릭하면 얼럿으로 처리 */}
@@ -317,7 +344,7 @@ export default Todos
 const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
   const navigate = useNavigate()
   const { setTimeLeft } = useTimeLeftStore()
-
+  const theme = useTheme()
   const handleTodoItemStatus = () => {
     if (itemStatus === 'ready') {
       setTimeLeft(estimateTime)
@@ -326,20 +353,59 @@ const Todo = ({ estimateTime, itemStatus, title }: TodoItem) => {
   }
 
   return (
-    <div>
-      <Box style={{ flex: 'column' }}>
-        <Box>
-          <div>{<img src="#" alt="" />}</div>
-          <div>{title}</div>
-          <div>{`${estimateTime}분`}</div>
+    <div style={{ marginTop: '1rem' }}>
+      <Box
+        display={'flex'}
+        justifyContent="space-between"
+        alignItems={'center'}
+        width={'100%'}
+        marginBottom={'16px'}
+      >
+        <Box display={'flex'} width={'100%'}>
+          <Box className={'icon'} width={24} height={24} marginRight={'12px'}>
+            <img src={restIcon} alt={'restIcon'} />
+          </Box>
+          <Box>
+            <Box display="flex">
+              <Typography
+                variant="title-5-medium-16"
+                fontWeight={600}
+                marginRight={'12px'}
+              >
+                {title}
+              </Typography>
+              <Typography
+                variant="title-5-medium-16"
+                color={theme.palette.semanticPurple1}
+              >
+                {estimateTime}분
+              </Typography>
+            </Box>
+          </Box>
         </Box>
-        <Box>
-          {itemStatus === 'ready' ? (
-            <button onClick={handleTodoItemStatus}>{itemStatus}</button>
-          ) : (
-            <p>완료 아이콘 넣기</p>
-          )}
-        </Box>
+        <Button
+          onClick={handleTodoItemStatus}
+          variant="text"
+          disableRipple
+          disableElevation
+          sx={{
+            padding: 0,
+            minWidth: 0,
+            margin: 0,
+            border: 'none',
+            boxShadow: 'none',
+            background: 'none',
+            color: 'inherit',
+            '&:hover': {
+              background: 'none', // Hover 배경 제거
+            },
+          }}
+        >
+          <img
+            src={itemStatus === 'ready' ? readyStatusIcon : doneStatusIcon}
+            alt={'statusIcon'}
+          />
+        </Button>
       </Box>
     </div>
   )
