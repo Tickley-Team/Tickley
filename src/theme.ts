@@ -23,6 +23,9 @@ export const TickleyTheme = createTheme({
       black: tokens.color.gray1000.value,
     },
   },
+  typography: {
+    fontFamily: `'Pretendard', 'Arial', sans-serif`,
+  },
 })
 //TODO: 타입 정의 파일로 옮기기
 declare module '@mui/material/styles' {
