@@ -3,6 +3,7 @@ import { Box, Button, Divider, Typography, useTheme } from '@mui/material'
 import { useFilterTodos } from '../hooks/useFilteredTodos'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { DateNowToUnix } from '../utils'
+
 import {
   CategoryNames,
   RecommendTodo,
@@ -14,12 +15,42 @@ import { RangeSlider } from '../components/RangeSlider'
 import BottomNavbar from '../components/BottomNavbar'
 import restIcon from '../assets/icons/rest.svg'
 import circleAddIcon from '../assets/icons/circleAddIcon.svg'
+import study from '../assets/icons/study.svg'
+import exercise from '../assets/icons/exercise.svg'
+import chore from '../assets/icons/chore.svg'
+import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
+
+const CategoryMapper = [
+  {
+    categoryName: '휴식',
+    icon: restIcon,
+  },
+
+  {
+    categoryName: '운동',
+    icon: exercise,
+  },
+
+  {
+    categoryName: '공부',
+    icon: study,
+  },
+
+  {
+    categoryName: '부업/재테크',
+    icon: chore,
+  },
+]
+
 const TodosFind = () => {
   const navigate = useNavigate()
+
   const todosMockData = useLoaderData<RecommendTodo[]>()?.map((todo) => ({
     ...todo,
+
     estimateTime: Number(todo.estimateTime),
   }))
+
   const {
     categoryNames,
     setCategoryName,
@@ -36,8 +67,10 @@ const TodosFind = () => {
       itemStatus: 'ready',
       registeredDate: DateNowToUnix(),
     })
+
     navigate('/todos')
   }
+
   return (
     <MobileLayout>
       <div
@@ -50,6 +83,7 @@ const TodosFind = () => {
       >
         <RangeSlider />
       </div>
+
       <Divider
         style={{
           margin: '24px 0',
@@ -57,18 +91,24 @@ const TodosFind = () => {
           width: '100%',
         }}
       />
+
       <Typography width={'100%'} variant="title-5-medium-18">
         추천 할일
       </Typography>
+
       <Typography width={'100%'}>틈새시간 할일을 추천해드려요.</Typography>
+
       <CategoryBar
         categoryNames={categoryNames}
         onClick={setCategoryName}
         selectedCategoryName={selectedCategoryName}
       />
+
       <TodoList list={filteredTodos} onAddTodo={addTodo} />
+
       <div>
         {/* 하단 고정 네비게이션바*/}
+
         <BottomNavbar />
       </div>
     </MobileLayout>
@@ -79,9 +119,11 @@ export default TodosFind
 
 export const TodoList = ({
   list,
+
   onAddTodo,
 }: {
   list: RecommendTodo[]
+
   onAddTodo: (todo: RecommendTodo) => void
 }) => {
   return (
@@ -96,17 +138,22 @@ export const TodoList = ({
     </>
   )
 }
+
 type CategoryBarProps = {
   selectedCategoryName: string
   categoryNames: CategoryNames
   onClick: (e: string) => void
 }
+
 export const CategoryBar = ({
   selectedCategoryName,
+
   categoryNames,
+
   onClick,
 }: CategoryBarProps) => {
   const theme = useTheme()
+
   return (
     <Box
       sx={{
@@ -115,7 +162,7 @@ export const CategoryBar = ({
         justifyContent: 'flex-start',
         overflowX: 'auto',
         gap: '12px',
-        margin: '16px 0 32px  0',
+        margin: '16px 0 32px 0',
       }}
     >
       {categoryNames.map((categoryName, idx) => (
@@ -128,7 +175,9 @@ export const CategoryBar = ({
               categoryName === selectedCategoryName
                 ? theme.palette.gray1000
                 : theme.palette.gray300,
+
             borderRadius: '4px',
+
             color:
               categoryName === selectedCategoryName
                 ? theme.palette.gray100
@@ -148,12 +197,18 @@ export const CategoryBar = ({
 export type TodoRecommendItemProps = TodoRecommendItemType & {
   onClick: (e: React.MouseEvent<HTMLButtonElement>) => void
 }
+
 export const TodoRecommendItem = ({
   title,
+
   estimateTime,
+
   onClick,
 }: TodoRecommendItemProps) => {
+  const { categoryName: selectedCategoryName } = useRecommendTodoFilterStore()
+
   const theme = useTheme()
+
   return (
     <Box
       display={'flex'}
@@ -164,8 +219,16 @@ export const TodoRecommendItem = ({
     >
       <Box display={'flex'} width={'100%'}>
         <Box className={'icon'} width={24} height={24} marginRight={'12px'}>
-          <img src={restIcon} alt={'restIcon'} />
+          <img
+            src={
+              CategoryMapper.find(
+                ({ categoryName }) => categoryName === selectedCategoryName,
+              )?.icon
+            }
+            alt={'categoryIcon'}
+          />
         </Box>
+
         <Box>
           <Box display="flex">
             <Typography
@@ -175,6 +238,7 @@ export const TodoRecommendItem = ({
             >
               {title}
             </Typography>
+
             <Typography
               variant="title-5-medium-16"
               color={theme.palette.semanticPurple1}
@@ -184,6 +248,7 @@ export const TodoRecommendItem = ({
           </Box>
         </Box>
       </Box>
+
       <Button
         onClick={onClick}
         variant="text"
@@ -191,12 +256,19 @@ export const TodoRecommendItem = ({
         disableElevation
         sx={{
           padding: 0,
+
           minWidth: 0,
+
           margin: 0,
+
           border: 'none',
+
           boxShadow: 'none',
+
           background: 'none',
+
           color: 'inherit',
+
           '&:hover': {
             background: 'none', // Hover 배경 제거
           },
