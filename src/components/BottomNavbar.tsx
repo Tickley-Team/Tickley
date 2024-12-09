@@ -3,15 +3,15 @@ import './BottomNavbar.css'
 
 const BottomNavbar = () => {
     return (
-        <div className="bottom-navbar">
+        <div className="bottom-navbar" style={{ marginBottom: '13px', backgroundColor: '#FFFFFF' }}>
           <Link to="/todos">
-            <button>오늘 할일</button>
+            <img src='/src/assets/navbar/today-todos-click.svg' alt='오늘 할일' />
           </Link>
           <Link to="/todos/find">
-            <button>할일 찾기</button>
+            <img src='/src/assets/navbar/find-todos-click.svg' alt='할일 찾기' />
           </Link>
           <Link to="/todos/memory">
-            <button>기록</button>
+            <img src='/src/assets/navbar/todos-memory-click.svg' alt='기록' />
           </Link>
         </div>
     )
