@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router'
 import { MobileLayout } from '../layout/MobileLayout'
 import { Typography } from '@mui/material'
 import { CTAButton } from '../components/Button'
-import illust from '../assets/illust.svg';
 
 const CompletedTimer = () => {
   const navigate = useNavigate()
@@ -17,7 +16,7 @@ const CompletedTimer = () => {
         <br />
         <Typography variant='title-5-medium-26'>완료했어요!</Typography>
         <br />
-        <img src={illust} alt="이미지" />
+        <img src='https://github.com/user-attachments/assets/e767c9fe-061b-4652-9bab-6de1766781f5' alt="이미지" />
         <br />
         <CTAButton onClick={handleClickDone} style={{ marginTop: '214px', width: '343px' }}>
           완료
