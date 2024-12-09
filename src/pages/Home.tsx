@@ -5,6 +5,7 @@ import guideSpeechBubble from '../assets/guideSpeechBubble.svg'
 import mainTickley from '../assets/mainTickley.svg'
 import { CTAButton } from '../components/Button'
 import { MobileLayout } from '../layout/MobileLayout'
+import './Home.css'
 
 interface MockData {
   isFirstVisit: boolean
@@ -40,7 +41,7 @@ const Home = () => {
 
   return (
     <MobileLayout>
-      <Typography variant="headline-8-heavy" marginBottom={'50px'}>
+      <Typography variant="headline-8-heavy" marginBottom={'50px'} marginTop={'50px'}>
         티클리
       </Typography>
       <img src={guideSpeechBubble} alt={'guideSpeechBubble'} />
