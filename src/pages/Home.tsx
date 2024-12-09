@@ -1,7 +1,15 @@
 import { useEffect, useState } from 'react'
 import { Link, useNavigate } from 'react-router'
-import { MobileLayout } from '../layout/MobileLayout'
+import guideSpeechBubble from '../assets/guideSpeechBubble.svg'
+import mainTickley from '../assets/mainTickley.svg'
 import { CTAButton } from '../components/Button'
+import { MobileLayout } from '../layout/MobileLayout'
+
+const tickleyFontStyle = {
+  fontSize: '48px',
+  marginTop: '184px',
+  marginBottom: '50px',
+}
 
 interface MockData {
   isFirstVisit: boolean
@@ -37,11 +45,14 @@ const Home = () => {
 
   return (
     <MobileLayout>
-      <div>틈새시간 할일 알려줌</div>
-      <div>티끌,먼지 이미지</div>
+      <p style={tickleyFontStyle}>티클리</p>
+      <img src={guideSpeechBubble} alt={'guideSpeechBubble'} />
+      <img src={mainTickley} alt={'mainTickley'} />
       {/* 시작하기 버튼 누르면 온보딩 화면으로 이동 */}
       <Link to="/onboarding/0" style={{ width: '100%' }}>
-        <CTAButton>시작하기</CTAButton>
+        <CTAButton style={{ marginTop: '181px', marginBottom: '48px' }}>
+          시작하기
+        </CTAButton>
       </Link>
     </MobileLayout>
   )
