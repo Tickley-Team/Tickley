@@ -1,0 +1,65 @@
+[
+  {
+    "id": 1,
+    "title": "녹차 우려서 먹기",
+    "categoryCode": "1",
+    "categoryName": "휴식",
+    "estimateTime": "15분"
+  },
+  {
+    "id": 2,
+    "title": "명상",
+    "categoryCode": "1",
+    "categoryName": "휴식",
+    "estimateTime": "15분"
+  },
+  {
+    "id": 3,
+    "title": "요가",
+    "categoryCode": "1",
+    "categoryName": "휴식",
+    "estimateTime": "20분"
+  },
+  {
+    "id": 4,
+    "title": "헬스",
+    "categoryCode": "2",
+    "categoryName": "운동",
+    "estimateTime": "30분"
+  },
+  {
+    "id": 5,
+    "title": "달리기",
+    "categoryCode": "2",
+    "categoryName": "운동",
+    "estimateTime": "20분"
+  },
+  {
+    "id": 6,
+    "title": "영어회화",
+    "categoryCode": "3",
+    "categoryName": "공부",
+    "estimateTime": "20분"
+  },
+  {
+    "id": 7,
+    "title": "리액트 공식문서 읽기",
+    "categoryCode": "3",
+    "categoryName": "공부",
+    "estimateTime": "15분"
+  },
+  {
+    "id": 8,
+    "title": "주식",
+    "categoryCode": "4",
+    "categoryName": "부업/재테크",
+    "estimateTime": "20분"
+  },
+  {
+    "id": 9,
+    "title": "캐시워크",
+    "categoryCode": "4",
+    "categoryName": "부업/재테크",
+    "estimateTime": "10분"
+  }
+]
