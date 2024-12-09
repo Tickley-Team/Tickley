@@ -1,5 +1,7 @@
 import { useNavigate } from 'react-router'
 import { MobileLayout } from '../layout/MobileLayout'
+import { Typography } from '@mui/material'
+import { CTAButton } from '../components/Button'
 
 const CompletedTimer = () => {
   const navigate = useNavigate()
@@ -10,10 +12,16 @@ const CompletedTimer = () => {
   return (
     <MobileLayout>
       <div>
-        <h1>15분 명상하기</h1>
-        <h2>완료했어요!</h2>
+        <Typography variant='title-6-bold-34'>15분 명상하기</Typography>
+        <br />
+        <Typography variant='title-5-medium-26'>완료했어요!</Typography>
+        <br />
         <img src='/src/assets/illust.svg' alt="이미지" />
-        <button onClick={handleClickDone}>완료</button>
+        <br />
+        <CTAButton onClick={handleClickDone} style={{ marginTop: '214px', width: '343px' }}>
+          완료
+        </CTAButton>
+
       </div>
     </MobileLayout>
   )
