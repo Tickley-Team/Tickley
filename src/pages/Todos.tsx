@@ -142,9 +142,14 @@ const Todos = () => {
             {!isBottomSheetOpen && (
               <Fab
                 style={{
-                  backgroundColor: theme.palette.primary100,
-                  color: theme.palette.primary900,
+                  backgroundColor: isAddLayerOpen
+                    ? theme.palette.gray1000
+                    : theme.palette.primary100,
+                  color: isAddLayerOpen
+                    ? theme.palette.gray100
+                    : theme.palette.primary900,
                   boxShadow: 'none',
+                  fontSize: '2rem',
                 }}
                 aria-label="add"
                 onClick={handleAddLayerOpen}
@@ -161,8 +166,17 @@ const Todos = () => {
               setAnchorEl(null)
             }}
           >
-            <Popper open={isAddLayerOpen} anchorEl={anchorEl}>
-              <Box sx={{ bgcolor: 'background.paper' }}>
+            <Popper
+              open={isAddLayerOpen}
+              anchorEl={anchorEl}
+              placement="top-end"
+              sx={{
+                padding: '16px',
+                borderRadius: '4px',
+                backgroundColor: 'background.paper',
+              }}
+            >
+              <Box>
                 <Box className="add-layer">
                   <Box
                     display={'flex'}
