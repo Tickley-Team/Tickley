@@ -11,6 +11,8 @@ import { createBrowserRouter, RouterProvider } from 'react-router'
 import { ThemeProvider } from '@mui/material/styles'
 import { TickleyTheme } from './theme'
 import CssBaseline from '@mui/material/CssBaseline'
+import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
+import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 
 function App() {
   const isProduction = process.env.NODE_ENV === 'production'
@@ -62,8 +64,10 @@ function App() {
 
   return (
     <ThemeProvider theme={TickleyTheme}>
-      <RouterProvider router={router} />
-      <CssBaseline />
+      <LocalizationProvider dateAdapter={AdapterDayjs}>
+        <RouterProvider router={router} />
+        <CssBaseline />
+      </LocalizationProvider>
     </ThemeProvider>
   )
 }

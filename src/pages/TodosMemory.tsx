@@ -60,7 +60,7 @@ const TodosMemory = () => {
               <img src='/src/assets/memory/memory-question.svg' alt='question' />
             </button>
           </div>
-          <div>
+          <div style={{ paddingLeft: '8px', paddingBottom: '108px' }}>
             <div style={{
               display: 'grid',
               gridTemplateColumns: 'repeat(7, 1fr)',
@@ -73,7 +73,9 @@ const TodosMemory = () => {
                   key={index}
                   style={{
                     textAlign: 'center',
-                    color: '#000000'
+                    color: '#000000',
+                    width: '24px',
+                    height: '24px',
                   }}
                 >
                   {day}
@@ -86,21 +88,23 @@ const TodosMemory = () => {
               gridTemplateColumns: 'repeat(7, 1fr)',
               gap: '8px'
             }}>
-              {currentDays.map((day, index) => (
+              {currentDays.map((_day, index) => (
                 <div
                   key={index}
                   style={{
                     aspectRatio: '1',
-                    backgroundColor: '#FFFFFF',
+                    backgroundColor: '#D9DAE2',
                     borderRadius: '4px',
-                    border: '1px solid #E5E6ED',
+                    width: '24px',
+                    height: '24px',
+                    border: 'none',
                     display: 'flex',
                     justifyContent: 'center',
                     alignItems: 'center',
-                    color: index % 7 === 0 ? '#FF4141' : index % 7 === 6 ? '#4157FF' : '#000000'
+                    color: '#000000'
                   }}
                 >
-                  {day}
+                  {''}
                 </div>
               ))}
             </div>
@@ -108,9 +112,10 @@ const TodosMemory = () => {
         </section>
         <BottomNavbar />
       </div>
-      {isShowDatePopup && (
-        <TodoMemoryDatePopup onClickClose={() => setShowDatePopup(false)} />
-      )}
+      <TodoMemoryDatePopup 
+        open={isShowDatePopup}
+        onClickClose={() => setShowDatePopup(false)} 
+      />
       <TodoMemoryColorStandardPopup
         open={isShowColorStandard}
         onClickClose={() => setShowColorStandard(false)}
