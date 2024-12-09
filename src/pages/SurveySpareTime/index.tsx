@@ -15,6 +15,8 @@ const SurveySpareTime = () => {
       <Typography
         variant="title-6-bold-34"
         sx={{
+          width: '100%',
+          marginTop: '192px',
           whiteSpace: 'pre-line',
           textAlign: 'left',
           marginBottom: '64px',

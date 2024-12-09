@@ -26,7 +26,7 @@ export const RangeSlider = ({ ...restProps }: RangeSliderProps) => {
   }))
   return (
     <Box width={'100%'}>
-      <Typography sx={{ mb: 1, color: '#666666' }}>
+      <Typography variant="title-5-medium-26">
         {/* TODO: refactor 연산 */}
         {RangeMapper.find(({ time }) => time === spareTime)?.displayText}
       </Typography>
@@ -42,8 +42,10 @@ export const RangeSlider = ({ ...restProps }: RangeSliderProps) => {
 }
 
 const CustomSlider = styled(Slider)({
-  height: 8,
+  height: 32,
   padding: 0,
+  marginTop: 20,
+  borderRadius: 9999,
   '& .MuiSlider-rail': {
     opacity: 1,
     backgroundColor: '#E0E0E0', // gray300
@@ -53,8 +55,8 @@ const CustomSlider = styled(Slider)({
     backgroundColor: '#00A76F', // pri500
   },
   '& .MuiSlider-thumb': {
-    height: 24,
-    width: 24,
+    height: 58,
+    width: 58,
     backgroundColor: '#00A76F', // pri500
     border: '2px solid #fff',
     '&:focus, &:hover, &.Mui-active, &.Mui-focusVisible': {
@@ -70,5 +72,9 @@ const CustomSlider = styled(Slider)({
     width: 8,
     borderRadius: '50%',
     marginTop: 0,
+  },
+  '& .MuiSlider-markLabel': {
+    fontSize: '14px', // 글꼴 크기
+    top: 53, // 위치 조정
   },
 })
