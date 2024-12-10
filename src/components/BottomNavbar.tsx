@@ -1,8 +1,8 @@
 import { Link, useLocation } from 'react-router'
-import todayTodosClick from '../assets/navbar/today-todos-click.svg'
-import todayTodosUnClick from '../assets/navbar/today-todos-unclick.svg'
 import findTodoClick from '../assets/navbar/find-todos-click.svg'
 import findTodoUnClick from '../assets/navbar/find-todos-unclick.svg'
+import todayTodosClick from '../assets/navbar/today-todos-click.svg'
+import todayTodosUnClick from '../assets/navbar/today-todos-unclick.svg'
 import todoMemoryClick from '../assets/navbar/todos-memory-click.svg'
 import todoMemoryUnClick from '../assets/navbar/todos-memory-unclick.svg'
 
@@ -13,10 +13,7 @@ const BottomNavbar = () => {
   const pathname = location.pathname
 
   return (
-    <div
-      className="bottom-navbar"
-      style={{ marginBottom: '13px', backgroundColor: '#FFFFFF' }}
-    >
+    <div className="bottom-navbar" style={{ backgroundColor: '#FFFFFF' }}>
       <Link to="/todos">
         <img
           src={pathname === '/todos' ? todayTodosClick : todayTodosUnClick}

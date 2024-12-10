@@ -12,18 +12,18 @@ import {
 import { useState } from 'react'
 import { useNavigate } from 'react-router'
 import addIcon from '../assets/icons/addIcon.svg'
+import doneStatusIcon from '../assets/icons/doneStatusIcon.svg'
+import readyStatusIcon from '../assets/icons/readyStatusIcon.svg'
+import restIcon from '../assets/icons/rest.svg'
 import { BasicDialog } from '../components/BasicDialog'
 import BottomNavbar from '../components/BottomNavbar'
 import { RangeSlider } from '../components/RangeSlider'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { MobileLayout } from '../layout/MobileLayout'
 import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
+import { useTodoStore } from '../stores/todoStore'
 import { TodoItem } from '../types'
 import { DateNowToUnix } from '../utils'
-import readyStatusIcon from '../assets/icons/readyStatusIcon.svg'
-import doneStatusIcon from '../assets/icons/doneStatusIcon.svg'
-import restIcon from '../assets/icons/rest.svg'
-import { useTodoStore } from '../stores/todoStore'
 import { CategoryBar, CategoryMapper } from './TodosFind'
 
 const Todos = () => {
@@ -97,6 +97,7 @@ const Todos = () => {
           width: '100%',
           marginTop: '40px',
           marginBottom: '21px',
+          paddingLeft: '16px',
         }}
       >
         <Typography variant="title-7-extrabold-20">오늘 할일</Typography>
@@ -105,17 +106,17 @@ const Todos = () => {
       <div
         style={{
           width: '100%',
-          height: '608px',
+          height: '100%',
           backgroundColor: theme.palette.gray300,
+          padding: '16px',
         }}
       >
-        <Box onClick={handleCalendarClicked}>2024년 9월</Box>
+        {/* <Box onClick={handleCalendarClicked}>2024년 12월</Box> */}
         {/* 할 일 추가 버튼 */}
         <div
           style={{
             // width: '100%',
-            height: '520px',
-            margin: '16px',
+            height: '100%',
             backgroundColor: theme.palette.gray100,
             position: 'relative',
           }}
@@ -144,10 +145,9 @@ const Todos = () => {
           </div>
           <div
             style={{
-              height: 0,
               width: '90%',
               margin: '0 auto',
-              border: '1px solid',
+              borderTop: '1px solid',
               borderColor: theme.palette.gray400,
             }}
           >
@@ -166,9 +166,7 @@ const Todos = () => {
           {/* 그리고 할일 추가를 클릭하면 할일 추가/볼것 추가 모달이 사라지고 할일 등록하는 바텀 시트 모달이 뜸 */}
           {/* 볼것 추가를 클릭하면 얼럿으로 처리 */}
           {/* X를 누르게 되면 할일 추가/볼것 추가 모달이 사라짐 */}
-          <div
-            style={{ position: 'absolute', right: '26px', bottom: '46.01px' }}
-          >
+          <div style={{ position: 'absolute', right: '10px', bottom: '22px' }}>
             {!isBottomSheetOpen && (
               <Fab
                 style={{
@@ -188,155 +186,158 @@ const Todos = () => {
               </Fab>
             )}
           </div>
-          {/* 할일 추가/볼것 추가 모달 START */}
-          <Backdrop
-            open={isAddLayerOpen}
-            onClick={() => {
-              setIsAddLayerOpen(false)
-              setAnchorEl(null)
-            }}
-          >
-            <Popper
-              open={isAddLayerOpen}
-              anchorEl={anchorEl}
-              placement="top-end"
-              sx={{
-                padding: '16px',
-                borderRadius: '4px',
-                backgroundColor: 'background.paper',
-              }}
-            >
-              <Box>
-                <Box className="add-layer">
-                  <Box
-                    display={'flex'}
-                    gap={'12px'}
-                    marginBottom={'16px'}
-                    alignItems={'center'}
-                    onClick={handleAddTodoLayer}
-                    style={{ cursor: 'pointer' }}
-                  >
-                    <img src={addIcon} alt={'addIcon'} />
-                    <p>할일 추가</p>
-                  </Box>
-                  <Box
-                    display={'flex'}
-                    gap={'12px'}
-                    alignItems={'center'}
-                    style={{ cursor: 'pointer' }}
-                    onClick={handleAddUrl}
-                  >
-                    <img src={addIcon} alt={'addIcon'} />
-                    <p>볼 것(URL 추가)</p>
-                  </Box>
-                </Box>
-              </Box>
-            </Popper>
-          </Backdrop>
-          {/* 할일 추가/볼것 추가 모달 END */}
-
-          {/* 할일 등록하는 바텀 시트 모달 START */}
-          {isBottomSheetOpen && (
-            <SwipeableDrawer
-              anchor={'bottom'}
-              open={isBottomSheetOpen}
-              onOpen={() => {}}
-              onClose={() => {}}
-              PaperProps={{
-                sx: {
-                  height: '345px',
-                  padding: '24px 16px',
-                },
-              }}
-            >
-              <CategoryBar
-                categoryNames={categoryNames}
-                onClick={setCategoryName}
-                selectedCategoryName={categoryName}
-              />
-              <TextField
-                label="새 할일 입력"
-                variant="outlined"
-                value={title}
-                sx={{
-                  '& .MuiInputBase-root': {
-                    height: '44px',
-                  },
-                  '& .MuiOutlinedInput-notchedOutline': {
-                    borderRadius: '4px',
-                  },
-                  '& .MuiFormLabel-root': {
-                    fontSize: '14px',
-                  },
-                  marginBottom: '16px',
-                }}
-                onChange={handleChangeTitle}
-              />
-              <div
-                style={{
-                  alignSelf: 'stretch',
-                  height: 0,
-                  border: '1px solid',
-                  borderColor: theme.palette.gray400,
-                  marginBottom: '16px',
-                }}
-              ></div>
-              <div style={{ width: '100%', marginBottom: '16px' }}>
-                <RangeSlider />
-              </div>
-              <div
-                style={{
-                  alignSelf: 'stretch',
-                  width: '100%',
-                  height: 0,
-                  border: '1px solid',
-                  borderColor: theme.palette.gray400,
-                  marginBottom: '16px',
-                }}
-              ></div>
-              <div
-                style={{
-                  width: '100%',
-                  display: 'flex',
-                  justifyContent: 'center',
-                  alignItems: 'center',
-                  gap: '10px',
-                }}
-              >
-                <button
-                  onClick={handleCancel}
-                  style={{
-                    backgroundColor: theme.palette.grey[400],
-                    color: theme.palette.common.black,
-                    width: '100%',
-                    height: '48px',
-                    borderRadius: '4px',
-                    border: 'none',
-                  }}
-                >
-                  취소
-                </button>
-                <button
-                  disabled={!title}
-                  onClick={handleSubmit}
-                  style={{
-                    backgroundColor: theme.palette.common.black,
-                    color: theme.palette.grey[100],
-                    width: '100%',
-                    height: '48px',
-                    borderRadius: '4px',
-                    border: 'none',
-                  }}
-                >
-                  추가
-                </button>
-              </div>
-            </SwipeableDrawer>
-          )}
-          {/* 할일 등록하는 바텀 시트 모달 END */}
         </div>
       </div>
-
+      {/* 할일 추가/볼것 추가 모달 START */}
+      <Backdrop
+        open={isAddLayerOpen}
+        onClick={() => {
+          setIsAddLayerOpen(false)
+          setAnchorEl(null)
+        }}
+        sx={{
+          position: 'absolute',
+        }}
+      >
+        <Popper
+          open={isAddLayerOpen}
+          anchorEl={anchorEl}
+          placement="top-end"
+          sx={{
+            padding: '16px',
+            borderRadius: '4px',
+            backgroundColor: 'background.paper',
+          }}
+        >
+          <Box>
+            <Box className="add-layer">
+              <Box
+                display={'flex'}
+                gap={'12px'}
+                marginBottom={'16px'}
+                alignItems={'center'}
+                onClick={handleAddTodoLayer}
+                style={{ cursor: 'pointer' }}
+              >
+                <img src={addIcon} alt={'addIcon'} />
+                <p>할일 추가</p>
+              </Box>
+              <Box
+                display={'flex'}
+                gap={'12px'}
+                alignItems={'center'}
+                style={{ cursor: 'pointer' }}
+                onClick={handleAddUrl}
+              >
+                <img src={addIcon} alt={'addIcon'} />
+                <p>볼 것(URL 추가)</p>
+              </Box>
+            </Box>
+          </Box>
+        </Popper>
+      </Backdrop>
+      {/* 할일 추가/볼것 추가 모달 END */}
+      {/* 할일 등록하는 바텀 시트 모달 START */}
+      {isBottomSheetOpen && (
+        <SwipeableDrawer
+          anchor={'bottom'}
+          open={isBottomSheetOpen}
+          onOpen={() => {}}
+          onClose={() => {}}
+          PaperProps={{
+            sx: {
+              width: '375px',
+              padding: '24px 16px',
+              left: '50%',
+              transform: 'translate(-50%, 0)',
+            },
+          }}
+        >
+          <CategoryBar
+            categoryNames={categoryNames}
+            onClick={setCategoryName}
+            selectedCategoryName={categoryName}
+          />
+          <TextField
+            label="새 할일 입력"
+            variant="outlined"
+            value={title}
+            sx={{
+              '& .MuiInputBase-root': {
+                height: '44px',
+              },
+              '& .MuiOutlinedInput-notchedOutline': {
+                borderRadius: '4px',
+              },
+              '& .MuiFormLabel-root': {
+                fontSize: '14px',
+              },
+              marginBottom: '16px',
+            }}
+            onChange={handleChangeTitle}
+          />
+          <div
+            style={{
+              alignSelf: 'stretch',
+              height: 0,
+              border: '1px solid',
+              borderColor: theme.palette.gray400,
+              marginBottom: '16px',
+            }}
+          ></div>
+          <div style={{ width: '100%', marginBottom: '16px' }}>
+            <RangeSlider />
+          </div>
+          <div
+            style={{
+              alignSelf: 'stretch',
+              width: '100%',
+              height: 0,
+              border: '1px solid',
+              borderColor: theme.palette.gray400,
+              marginBottom: '16px',
+            }}
+          ></div>
+          <div
+            style={{
+              width: '100%',
+              display: 'flex',
+              justifyContent: 'center',
+              alignItems: 'center',
+              gap: '10px',
+            }}
+          >
+            <button
+              onClick={handleCancel}
+              style={{
+                backgroundColor: theme.palette.grey[400],
+                color: theme.palette.common.black,
+                width: '100%',
+                height: '48px',
+                borderRadius: '4px',
+                border: 'none',
+              }}
+            >
+              취소
+            </button>
+            <button
+              disabled={!title}
+              onClick={handleSubmit}
+              style={{
+                backgroundColor: theme.palette.common.black,
+                color: theme.palette.grey[100],
+                width: '100%',
+                height: '48px',
+                borderRadius: '4px',
+                border: 'none',
+              }}
+            >
+              추가
+            </button>
+          </div>
+        </SwipeableDrawer>
+      )}
+      {/* 할일 등록하는 바텀 시트 모달 END */}
       <BottomNavbar />
 
       <BasicDialog

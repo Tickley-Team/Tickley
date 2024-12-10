@@ -1,24 +1,24 @@
+import { Box, Button, Typography, useTheme } from '@mui/material'
 import { useLoaderData, useNavigate } from 'react-router'
-import { Box, Button, Divider, Typography, useTheme } from '@mui/material'
 import { useFilterTodos } from '../hooks/useFilteredTodos'
 import { useLocalStorage } from '../hooks/useLocalStorage'
 import { DateNowToUnix } from '../utils'
 
+import chore from '../assets/icons/chore.svg'
+import circleAddIcon from '../assets/icons/circleAddIcon.svg'
+import exercise from '../assets/icons/exercise.svg'
+import restIcon from '../assets/icons/rest.svg'
+import study from '../assets/icons/study.svg'
+import BottomNavbar from '../components/BottomNavbar'
+import { RangeSlider } from '../components/RangeSlider'
+import { MobileLayout } from '../layout/MobileLayout'
+import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
 import {
   CategoryNames,
   RecommendTodo,
   TodoItem,
   TodoRecommendItemType,
 } from '../types'
-import { MobileLayout } from '../layout/MobileLayout'
-import { RangeSlider } from '../components/RangeSlider'
-import BottomNavbar from '../components/BottomNavbar'
-import restIcon from '../assets/icons/rest.svg'
-import circleAddIcon from '../assets/icons/circleAddIcon.svg'
-import study from '../assets/icons/study.svg'
-import exercise from '../assets/icons/exercise.svg'
-import chore from '../assets/icons/chore.svg'
-import { useRecommendTodoFilterStore } from '../stores/recommendTodoFilterStore'
 
 export const CategoryMapper = [
   {
@@ -43,6 +43,7 @@ export const CategoryMapper = [
 ]
 
 const TodosFind = () => {
+  const theme = useTheme()
   const navigate = useNavigate()
 
   const todosMockData = useLoaderData<RecommendTodo[]>()?.map((todo) => ({
@@ -84,27 +85,28 @@ const TodosFind = () => {
         <RangeSlider />
       </div>
 
-      <Divider
+      <div
         style={{
-          margin: '24px 0',
-          color: 'black',
-          width: '100%',
+          height: '100%',
+          borderTop: '1px solid',
+          borderColor: theme.palette.gray400,
+          paddingTop: '24px',
         }}
-      />
+      >
+        <Typography width={'100%'} variant="title-5-medium-18">
+          추천 할일
+        </Typography>
 
-      <Typography width={'100%'} variant="title-5-medium-18">
-        추천 할일
-      </Typography>
+        <Typography width={'100%'}>틈새시간 할일을 추천해드려요.</Typography>
 
-      <Typography width={'100%'}>틈새시간 할일을 추천해드려요.</Typography>
+        <CategoryBar
+          categoryNames={categoryNames}
+          onClick={setCategoryName}
+          selectedCategoryName={selectedCategoryName}
+        />
 
-      <CategoryBar
-        categoryNames={categoryNames}
-        onClick={setCategoryName}
-        selectedCategoryName={selectedCategoryName}
-      />
-
-      <TodoList list={filteredTodos} onAddTodo={addTodo} />
+        <TodoList list={filteredTodos} onAddTodo={addTodo} />
+      </div>
 
       <div>
         {/* 하단 고정 네비게이션바*/}
