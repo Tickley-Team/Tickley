@@ -48,7 +48,7 @@ const Todos = () => {
   )
 
   const handleAddLayerOpen = (event: React.MouseEvent<HTMLButtonElement>) => {
-    console.log('anchor', event.currentTarget)
+    //console.log('anchor', event.currentTarget)
 
     setAnchorEl(anchorEl ? null : event.currentTarget)
     setIsAddLayerOpen((prev) => !prev)
